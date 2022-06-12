@@ -2,5 +2,6 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "LWJGL/**/*.jar"
-    ]
+    ],
+    "java.debug.settings.console": "internalConsole"
 }

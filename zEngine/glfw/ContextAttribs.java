@@ -7,13 +7,13 @@ public class ContextAttribs {
     public int samples = 1;
 
     public ContextAttribs withVersion(int major, int minor) {
-        // GLFW.glfwWindowHint(GLFW.GLFW_VERSION_MAJOR, major);
-        // GLFW.glfwWindowHint(GLFW.GLFW_VERSION_MINOR, minor);
+        GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, major);
+        GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, minor);
         return this;
     }
 
     public ContextAttribs withProfileCore() {
-        // GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
+        GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
         return this;
     }
 
@@ -25,6 +25,7 @@ public class ContextAttribs {
 
     public ContextAttribs withDefaultHints() {
         GLFW.glfwDefaultWindowHints();
+        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         return this;
     }
 }

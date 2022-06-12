@@ -2,8 +2,6 @@ package zEngine.glfw;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
-import static org.lwjgl.system.MemoryUtil.*;
-
 import org.lwjgl.opengl.GL;
 
 /**
@@ -13,52 +11,46 @@ import org.lwjgl.opengl.GL;
  */
 
 public class Display {
-    private static long window;
-    private static ContextAttribs attribs;
-    public static void init() {
-        if (!GLFW.glfwInit()) {
-            throw new IllegalStateException("GLFW.glfwInit failed; could not initialize GLFW");
-        }
+    protected long window;
+    protected ContextAttribs attribs;
+    protected int width;
+    protected int height;
+    private static Display currentDisplay;
+
+    protected static void setCurrentDisplay(Display display) {
+        currentDisplay = display;
     }
 
-    public static void setContextAttribs(ContextAttribs contextAttribs) {
-        attribs = contextAttribs;
-    }
-
-    public static void create(int width, int height, String title) {
-        window = GLFW.glfwCreateWindow(width, height, title, NULL, NULL);
-        if (window == NULL) {
-            throw new RuntimeException("GLFW.glfwCreateWindow failed; could not create window");
-        }
-        if (attribs == null) {
-            throw new RuntimeException("Context attributes null");
-        }
-
-        GLFWVidMode vid = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-        GLFW.glfwSetWindowPos(window, (vid.width() - width)/2, 
-                (vid.height() - height)/2);
-
+    public void setCurrentContext() {
         GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
         GLFW.glfwSwapInterval(1);
         GLFW.glfwShowWindow(window);
+        setCurrentDisplay(this);
     }
 
-    public static void update() {
+    public void update() {
         GLFW.glfwSwapBuffers(window);
         GLFW.glfwPollEvents();
     }
 
-    public static boolean isCloseRequested() {
+    public void setCenterPosition(float x, float y) {
+        GLFWVidMode vid =   GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        int x_over_width =            (int) ((x *  vid.width()) -  (width / 2));
+        int y_over_height =           (int) ((y * vid.height()) - (height / 2));
+        GLFW.glfwSetWindowPos          (window,  x_over_width,   y_over_height);
+    }
+
+    public boolean isCloseRequested() {
         return GLFW.glfwWindowShouldClose(window);
     }
 
-    public static void close() {
+    public void close() {
         GLFW.glfwDestroyWindow(window);
         GLFW.glfwTerminate();
     }
 
-    public static int getSamples() {
+    public int getSamples() {
         if (attribs != null) {
             return attribs.samples;
         }

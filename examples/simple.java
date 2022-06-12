@@ -2,26 +2,20 @@ package examples;
 
 import zEngine.glfw.ContextAttribs;
 import zEngine.glfw.Display;
+import zEngine.glfw.DisplayBuilder;
 
 class SimpleExample {
     public static void main(String[] args) {
-        /**
-         * Initializes GLFW and creates the GLFW window.
-         */
-        Display.init();
+        DisplayBuilder builder = new DisplayBuilder();
         ContextAttribs attribs = new ContextAttribs()
-            .withVersion(4, 0)
-            .withProfileCore();
-        Display.setContextAttribs(attribs);
-        Display.create(1280, 760, "Window");
+            .withDefaultHints();
+        builder.setContextAttribs(attribs);
+        Display display = builder.create(1280, 760, "Window", true);
+        display.setCurrentContext();
 
-        while (!Display.isCloseRequested()) {
-            Display.update();
+        while (!display.isCloseRequested()) {
+            display.update(); 
         }
-
-        /** 
-         * Closes the window and terminates GLFW.
-         */
-        Display.close();
+        display.close();
     }
 }
