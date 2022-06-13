@@ -2,7 +2,18 @@ package zEngine.GL.functions;
 
 import org.lwjgl.opengl.GL11;
 
+/**
+ * A wrapper around common OpenGL functions
+ * 
+ * @author zixuan
+ */
 public class GLFunc {
+
+
+
+    /*
+     * Window-related functions
+     */
 
     /**
      * Sets the color for the entire window

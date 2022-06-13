@@ -8,18 +8,35 @@ import java.util.stream.Collectors;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
+/**
+ * Shader class; a wrapper around an OpenGL shader 
+ * 
+ * @author zixuan
+ */
 public class Shader {
     protected int id;
 
-
+    /**
+     * Creates
+     * @param type the 'type' - can be VERTEX_SHADER, FRAGMENT_SHADER, GEOM_SHADER, COMPUTE_SHADER or TESS_SHADER
+     * @return an 'empty' shader
+     */
     public static Shader create(int type) {
         int id = GL20.glCreateShader(type);
         return new Shader(id);
     }
+
     private Shader(int id) {
         this.id = id;
     }
 
+    /**
+     * Compiles the shader from a path.
+     * @param path the relative path
+     * @exception IOException
+     * @return error; if no error or file not found ""
+     * {@code}
+     */
     public String compile(String path) {
         try {
             return compileSource(Files.lines(Paths.get(path))
@@ -30,6 +47,11 @@ public class Shader {
         }
     }
 
+    /**
+     * Compiles the shader from source code
+     * @param source the source code
+     * @return error; if no error ""
+     */
     public String compileSource(String source) {
         GL20.glShaderSource(id, source);
 		GL20.glCompileShader(id);

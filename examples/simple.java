@@ -1,7 +1,8 @@
 package examples;
 
 import zEngine.GL.buffers.*;
-import zEngine.GL.functions.*;
+import static zEngine.GL.functions.GLFunc.*;
+import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
 import zEngine.glfw.*;
 
@@ -35,7 +36,7 @@ class SimpleExample {
     }
 
     private static Mesh loadMesh() {
-        MeshBuilder builder = new MeshBuilder(GLEnum.STATIC_DRAW, 
+        MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
             3, new int[] { 2, 3 });
 
         builder.put(-1.0f, -1.0f);
@@ -52,9 +53,9 @@ class SimpleExample {
     }
 
     private static void render(ShaderProgram program, Mesh mesh) {
-        GLFunc.glClearColor(0, 0, 0, 0);
-        GLFunc.glClear();
-        GLFunc.glDimensions(Display.getWidth(), Display.getHeight());
+        glClearColor(0, 0, 0, 0);
+        glClear();
+        glDimensions(Display.getWidth(), Display.getHeight());
         program.bind();
         mesh.render();
         program.unbind();

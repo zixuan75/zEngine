@@ -23,14 +23,25 @@ public class Display {
         current = display;
     }
 
+    /**
+     * 
+     * @return width of current display
+     */
     public static int getWidth() {
         return current.width;
     }
 
+    /**
+     * 
+     * @return height of current display
+     */
     public static int getHeight() {
         return current.height;
     }
 
+    /**
+     * Sets the current context to the window
+     */
     public void setCurrentContext() {
         GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
@@ -39,11 +50,19 @@ public class Display {
         setCurrentDisplay(this);
     }
 
+    /**
+     * Update
+     */
     public void update() {
         GLFW.glfwSwapBuffers(window);
         GLFW.glfwPollEvents();
     }
 
+    /**
+     * Sets the position of the center of the window
+     * @param x
+     * @param y
+     */
     public void setCenterPosition(float x, float y) {
         GLFWVidMode vid =   GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
         int x_over_width =            (int) ((x *  vid.width()) -  (width / 2));
@@ -51,15 +70,26 @@ public class Display {
         GLFW.glfwSetWindowPos          (window,  x_over_width,   y_over_height);
     }
 
+    /**
+     * 
+     * @return whether window should be closed
+     */
     public boolean isCloseRequested() {
         return GLFW.glfwWindowShouldClose(window);
     }
 
+    /**
+     * Closes the window
+     */
     public void close() {
         GLFW.glfwDestroyWindow(window);
         GLFW.glfwTerminate();
     }
 
+    /**
+     * 
+     * @return the amount of samples
+     */
     public int getSamples() {
         if (attribs != null) {
             return attribs.samples;

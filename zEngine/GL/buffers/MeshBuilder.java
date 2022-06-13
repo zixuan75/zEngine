@@ -1,5 +1,10 @@
 package zEngine.GL.buffers;
 
+/**
+ * A builder class for the Mesh class.
+ * 
+ * @author zixuan
+ */
 public class MeshBuilder {
     private Mesh mesh;
 
