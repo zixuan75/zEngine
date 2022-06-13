@@ -3,14 +3,12 @@ package examples;
 import zEngine.glfw.ContextAttribs;
 import zEngine.glfw.Display;
 import zEngine.glfw.DisplayBuilder;
+import zEngine.GL.buffers.Vbo;
+import zEngine.GL.shaders.ShaderProgram;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.system.MemoryStack;
-import java.nio.FloatBuffer;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.system.MemoryStack.*;
 
 class SimpleExample {
     public static void main(String[] args) {
@@ -21,28 +19,32 @@ class SimpleExample {
         Display display = builder.create(1280, 760, "Window", true);
         display.setCurrentContext();
 
+        ShaderProgram program = ShaderProgram.createProgram("res/simple/triangle.vert.glsl", 
+            "res/simple/triangle.frag.glsl");
         int vao = GL30.glGenVertexArrays();
         GL30.glBindVertexArray(vao);
-        int vbo;
-        try (MemoryStack stack = stackPush()) {
-            FloatBuffer buffer = stackMallocFloat(3 * 2);
-            buffer.put(-0.5f).put(-0.5f);
-            buffer.put(+0.5f).put(-0.5f);
-            buffer.put(+0.0f).put(+0.5f);
-            buffer.flip();
-            vbo = glGenBuffers();
-            glBindBuffer(GL_ARRAY_BUFFER, vbo);
-            glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-        }
-        GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, 0, 0);
+        Vbo vbo = Vbo.create(GL15.GL_STATIC_DRAW, 3, 0, new int[] { 2 });
+        vbo.bind();
+        vbo.put(-0.5f, -0.5f);
+        vbo.put(+0.5f, -0.5f);
+        vbo.put(+0.0f, +0.5f);
+        vbo.flipAndWrite();
+        vbo.unbind();
         GL30.glBindVertexArray(0);
         while (!display.isCloseRequested()) { 
-            
+            GL11.glClearColor(0, 0, 0, 0);
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            program.bind();
             GL30.glBindVertexArray(vao);
-            GL20.glEnableVertexAttribArray(0);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-            GL20.glDisableVertexAttribArray(0);
+            vbo.enable();
+            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 3);
+            vbo.disable();
             GL30.glBindVertexArray(0);
+            program.unbind();
+
+            
+            
+           
             display.update(); 
         }
         display.close();

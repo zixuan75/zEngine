@@ -2,6 +2,7 @@ package zEngine.GL.buffers;
 
 import java.nio.FloatBuffer;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.system.MemoryUtil;
@@ -29,6 +30,9 @@ public class Vbo {
         this.offset = offset;
         this.attribs = attribs;
         this.buffer = MemoryUtil.memAllocFloat(capacity * getAttribLength(attribs));
+        bind();
+        setAttribs();
+        unbind();
     }
 
     public void enable() {
@@ -56,8 +60,19 @@ public class Vbo {
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, draw);
     }
 
-    public void setAttribs() {
+    public void put(float... dataList) {
+        for (int i = 0; i < dataList.length; i++) {
+            buffer.put(dataList[i]);
+        }
+    }
 
+    public void setAttribs() {
+        int byteLength = getAttribLength(attribs) * 4;
+        int pointer = 0;
+        for (int i = 0; i < attribs.length; i++) {
+            GL20.glVertexAttribPointer(offset + i, attribs[i], GL11.GL_FLOAT, false, byteLength, pointer);
+            pointer += attribs[i] * 4;
+        }
     }
 
     private static int getAttribLength(int[] attribs) {
