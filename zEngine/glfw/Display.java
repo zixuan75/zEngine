@@ -1,6 +1,7 @@
 package zEngine.glfw;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
@@ -15,10 +16,19 @@ public class Display {
     protected ContextAttribs attribs;
     protected int width;
     protected int height;
+    protected GLFWFramebufferSizeCallback framebufferSizeCallback;
     public static Display current;
 
     protected static void setCurrentDisplay(Display display) {
         current = display;
+    }
+
+    public static int getWidth() {
+        return current.width;
+    }
+
+    public static int getHeight() {
+        return current.height;
     }
 
     public void setCurrentContext() {

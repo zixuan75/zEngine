@@ -1,6 +1,8 @@
 package zEngine.glfw;
 
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
+
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class DisplayBuilder {
@@ -31,6 +33,16 @@ public class DisplayBuilder {
         display.attribs = this.attribs;
         display.width = width;
         display.height = height;
+        display.framebufferSizeCallback = new GLFWFramebufferSizeCallback() {
+
+            @Override
+            public void invoke(long window, int width, int height) {
+                display.width = width;
+                display.height = height;
+            }
+            
+        };
+        GLFW.glfwSetFramebufferSizeCallback(display.window, display.framebufferSizeCallback);
         if (centered) {
             display.setCenterPosition(0.5f, 0.5f);
         }

@@ -8,11 +8,12 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.system.MemoryUtil;
 
 public class Vbo {
-    private int id;
-    private int draw;
-    private int offset;
-    private int[] attribs;
-    private FloatBuffer buffer;
+    private final int id;
+    private final int draw;
+    private final int offset;
+    private final int[] attribs;
+    private final FloatBuffer buffer;
+    protected final int vertexCount;
 
     public static Vbo create(int draw, int capacity, int offset, int[] attribs) {
         int id = GL15.glGenBuffers();
@@ -30,6 +31,7 @@ public class Vbo {
         this.offset = offset;
         this.attribs = attribs;
         this.buffer = MemoryUtil.memAllocFloat(capacity * getAttribLength(attribs));
+        this.vertexCount = capacity;
         bind();
         setAttribs();
         unbind();
