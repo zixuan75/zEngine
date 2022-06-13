@@ -1,24 +1,13 @@
 package examples;
 
-import zEngine.glfw.ContextAttribs;
-import zEngine.glfw.Display;
-import zEngine.glfw.DisplayBuilder;
-import zEngine.GL.buffers.Mesh;
-import zEngine.GL.buffers.Vao;
-import zEngine.GL.buffers.Vbo;
+import zEngine.GL.buffers.*;
+import zEngine.GL.functions.*;
 import zEngine.GL.shaders.ShaderProgram;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
+import zEngine.glfw.*;
 
 class SimpleExample {
     public static void main(String[] args) {
-        DisplayBuilder builder = new DisplayBuilder();
-        ContextAttribs attribs = new ContextAttribs()
-            .withDefaultHints();
-        builder.setContextAttribs(attribs);
-        Display display = builder.create(1280, 760, "Window", true);
-        display.setCurrentContext();
+        Display display = loadDisplay();
 
         ShaderProgram program = ShaderProgram.createProgram("res/simple/triangle.vert.glsl", 
             "res/simple/triangle.frag.glsl");
@@ -31,31 +20,41 @@ class SimpleExample {
 
         mesh.destroy();
         display.close();
+
+        
+    }
+
+    private static Display loadDisplay() {
+        DisplayBuilder builder = new DisplayBuilder();
+        ContextAttribs attribs = new ContextAttribs()
+            .withDefaultHints();
+        builder.setContextAttribs(attribs);
+        Display display = builder.create(1280, 760, "Window", true);
+        display.setCurrentContext();
+        return display;
     }
 
     private static Mesh loadMesh() {
-        Vao vao = Vao.create();
-        vao.bind();
-        Vbo vbo = Vbo.create(GL15.GL_STATIC_DRAW, 3, 0, new int[] { 2, 3 });
-        vbo.bind();
-        vbo.put(-1.0f, -1.0f);
-        vbo.put(+1.0f, +0.0f, +0.0f);
+        MeshBuilder builder = new MeshBuilder(GLEnum.STATIC_DRAW, 
+            3, new int[] { 2, 3 });
 
-        vbo.put(+1.0f, -1.0f);
-        vbo.put(+0.0f, +0.0f, +1.0f);
+        builder.put(-1.0f, -1.0f);
+        builder.put(+1.0f, +0.0f, +0.0f);
 
-        vbo.put(+0.0f, +1.0f);
-        vbo.put(+0.0f, +1.0f, +0.0f);
-        vbo.flipAndWrite();
-        vbo.unbind();
-        vao.unbind();
-        return new Mesh(vao, vbo);
+        builder.put(+1.0f, -1.0f);
+        builder.put(+0.0f, +0.0f, +1.0f);
+
+        builder.put(+0.0f, +1.0f);
+        builder.put(+0.0f, +1.0f, +0.0f);
+
+        Mesh mesh = builder.getMesh();
+        return mesh;
     }
 
     private static void render(ShaderProgram program, Mesh mesh) {
-        GL11.glClearColor(0, 0, 0, 0);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-        GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+        GLFunc.glClearColor(0, 0, 0, 0);
+        GLFunc.glClear();
+        GLFunc.glDimensions(Display.getWidth(), Display.getHeight());
         program.bind();
         mesh.render();
         program.unbind();

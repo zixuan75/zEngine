@@ -7,12 +7,6 @@ public class Mesh {
     public Vbo vbo;
     public int vertexCount;
 
-    public Mesh(Vao vao, Vbo vbo) {
-        this.vertexCount = vbo.vertexCount;
-        this.vao = vao;
-        this.vbo = vbo;
-    }
-
     public void render() {
         vao.bind();
         vbo.enable();

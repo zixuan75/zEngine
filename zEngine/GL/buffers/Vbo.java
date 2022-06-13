@@ -13,7 +13,7 @@ public class Vbo {
     private final int offset;
     private final int[] attribs;
     private final FloatBuffer buffer;
-    protected final int vertexCount;
+    public final int vertexCount;
 
     public static Vbo create(int draw, int capacity, int offset, int[] attribs) {
         int id = GL15.glGenBuffers();
@@ -66,6 +66,10 @@ public class Vbo {
         for (int i = 0; i < dataList.length; i++) {
             buffer.put(dataList[i]);
         }
+    }
+
+    public void clear() {
+        buffer.clear();   
     }
 
     public void setAttribs() {
