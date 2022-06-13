@@ -12,17 +12,6 @@ import zEngine.glfw.*;
  * @author zixuan
  */
 class SimpleExample {
-    private static final float[] TRIANGLE_VERTS = {
-        // Vertex 0
-        -1.0f, -1.0f, // Position
-        +1.0f, +0.0f, +0.0f, // Color
-        // Vertex 1
-        +1.0f, -1.0f, // Position
-        +0.0f, +0.0f, +1.0f, // Color
-        // Vertex 2
-        +0.0f, +1.0f, // Position
-        +0.0f, +1.0f, +0.0f  // Color
-    };
 
     public static void main(String[] args) {
         Display display = loadDisplay();
@@ -78,8 +67,21 @@ class SimpleExample {
         return display;
     }
 
+    /* The vertices of the triangle */
+    private static final float[] TRIANGLE_VERTS = {
+        // Vertex 0
+        -1.0f, -1.0f, // Position
+        +1.0f, +0.0f, +0.0f, // Color
+        // Vertex 1
+        +1.0f, -1.0f, // Position
+        +0.0f, +0.0f, +1.0f, // Color
+        // Vertex 2
+        +0.0f, +1.0f, // Position
+        +0.0f, +1.0f, +0.0f  // Color
+    };
+
     /*
-     * Creates a triangle with color.
+     * Creates the triangle
      */
     private static Mesh loadMesh() {
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
