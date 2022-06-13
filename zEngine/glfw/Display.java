@@ -15,10 +15,10 @@ public class Display {
     protected ContextAttribs attribs;
     protected int width;
     protected int height;
-    private static Display currentDisplay;
+    public static Display current;
 
     protected static void setCurrentDisplay(Display display) {
-        currentDisplay = display;
+        current = display;
     }
 
     public void setCurrentContext() {
