@@ -1,7 +1,6 @@
-package examples.glfw;
+package glfw;
 
-import org.lwjgl.opengl.GL11;
-
+import zEngine.GL.functions.GLFunc;
 import zEngine.glfw.*;
 
 /**
@@ -19,13 +18,13 @@ class MultipleWindows {
 
         while ((!display1.isCloseRequested()) && (!display2.isCloseRequested())) {
             display1.setCurrentContext();
-            GL11.glClearColor(1, 0, 0, 0);
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            GLFunc.glClearColor(1, 0, 0, 0);
+            GLFunc.glClear();
             display1.update();
 
             display2.setCurrentContext();
-            GL11.glClearColor(0, 0, 1, 0);
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+            GLFunc.glClearColor(0, 0, 1, 0);
+            GLFunc.glClear();
             display2.update();
         }
         display1.close();

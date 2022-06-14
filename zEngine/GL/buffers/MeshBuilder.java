@@ -34,12 +34,11 @@ public class MeshBuilder {
 
     /**
      * Writes the VBO data to the VBO, 
-     * unbinds the VAO and VBO and 
-     * returns mesh
+     * unbinds the VAO and VBO 
      * @return the mesh
      */
 
-    public Mesh getMesh() {
+    public Mesh createMesh() {
         mesh.vbo.flipAndWrite();
         mesh.vbo.unbind();
         mesh.vao.unbind();
