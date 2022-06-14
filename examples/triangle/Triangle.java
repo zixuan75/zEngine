@@ -67,17 +67,31 @@ class TriangleApp extends Application {
         return false;
     }
 
-    /* The vertices of the triangle */
+    // /* The vertices of the triangle */
+    // private static final float[] TRIANGLE_VERTS = {
+    //     // Vertex 0
+    //     -1.0f, -1.0f, // Position
+    //     +1.0f, +0.0f, +0.0f, // Color
+    //     // Vertex 1
+    //     +1.0f, -1.0f, // Position
+    //     +0.0f, +0.0f, +1.0f, // Color
+    //     // Vertex 2
+    //     +0.0f, +1.0f, // Position
+    //     +0.0f, +1.0f, +0.0f  // Color
+    // };
+
     private static final float[] TRIANGLE_VERTS = {
-        // Vertex 0
-        -1.0f, -1.0f, // Position
-        +1.0f, +0.0f, +0.0f, // Color
-        // Vertex 1
-        +1.0f, -1.0f, // Position
-        +0.0f, +0.0f, +1.0f, // Color
-        // Vertex 2
-        +0.0f, +1.0f, // Position
-        +0.0f, +1.0f, +0.0f  // Color
+        0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f,
+
+        1.0f, 0.0f, 
+        1.0f, 1.0f, 1.0f,
+
+        0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        
+        1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f
     };
 
     private Mesh loadMesh() {
@@ -93,8 +107,10 @@ class TriangleApp extends Application {
          * the element is the size of the attribute
          */
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
-            3, new int[] { 2, 3 });
+            4, 6, new int[] { 2, 3 });
         builder.put(TRIANGLE_VERTS);
+        builder.put(0, 2, 1);
+        builder.put(2, 3, 1);
         Mesh mesh = builder.createMesh();
         return mesh;
     }

@@ -10,7 +10,9 @@ import org.lwjgl.opengl.GL11;
 public class Mesh {
     public Vao vao;
     public Vbo vbo;
+    public Ibo ibo;
     public int vertexCount;
+    public int indexCount;
 
     /**
      * Renders the mesh.
@@ -18,7 +20,13 @@ public class Mesh {
     public void render() {
         vao.bind();
         vbo.enable();
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
+        if (indexCount >= 0) {
+            ibo.bind();
+            GL11.glDrawElements(GL11.GL_TRIANGLES, indexCount, GL11.GL_UNSIGNED_INT, 0);
+            ibo.unbind();
+        } else {
+            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
+        }
         vbo.disable();
         vao.unbind();
     }

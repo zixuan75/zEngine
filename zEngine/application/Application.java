@@ -6,6 +6,11 @@ import zEngine.glfw.DisplayBuilder;
 public abstract class Application {
     protected Display display;
 
+    /**
+     * Helper function; creates the display
+     * @param settings the display settings
+     * @param format the format
+     */
     protected void createDisplay(DisplaySettings settings, Format format) {
         DisplayBuilder builder = new DisplayBuilder();
         builder.setContextAttribs(format.attribs);

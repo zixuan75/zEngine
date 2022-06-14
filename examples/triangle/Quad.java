@@ -1,36 +1,20 @@
-# zEngine - an experimental project
+package triangle;
 
-This is a small project I'm working on. I do not intend for this to be a complete game engine; this is purely experimental.
-
-
-Hello World Triangle:
-
-````java
 import zEngine.GL.buffers.*;
 import static zEngine.GL.functions.GLFunc.*;
 import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
 import zEngine.application.*;
 import zEngine.glfw.*;
+import zEngine.util.vector.Vector3f;
 
-class TriangleApp extends Application {
+class QuadApp extends Application {
+
     private Mesh mesh;
     private ShaderProgram program;
 
-    private static final float[] TRIANGLE_VERTS = {
-        // Vertex 0
-        -1.0f, -1.0f, // Position
-        +1.0f, +0.0f, +0.0f, // Color
-        // Vertex 1
-        +1.0f, -1.0f, // Position
-        +0.0f, +0.0f, +1.0f, // Color
-        // Vertex 2
-        +0.0f, +1.0f, // Position
-        +0.0f, +1.0f, +0.0f  // Color
-    };
-
     public static void main(String[] args) {
-        TriangleApp app = new TriangleApp();
+        QuadApp app = new QuadApp();
         app.createDisplay(new DisplaySettings(), new Format());
         AppManager.runApplication(app);
     }
@@ -38,8 +22,8 @@ class TriangleApp extends Application {
     @Override
     public void start() {
         program = ShaderProgram.createProgram(
-            "examples/triangle/triangle.vert.glsl", 
-            "examples/triangle/triangle.frag.glsl");
+            "examples/triangle/quad.vert.glsl", 
+            "examples/triangle/quad.frag.glsl");
         mesh = loadMesh();
     }
 
@@ -49,6 +33,7 @@ class TriangleApp extends Application {
         glClear();
         glDimensions(Display.getWidth(), Display.getHeight());
         program.bind();
+        program.loadVector3f("color", new Vector3f(0, 1, 0));
         mesh.render();
         program.unbind();
     }
@@ -63,18 +48,24 @@ class TriangleApp extends Application {
         return false;
     }
 
+    private static final float[] QUAD_VERTS = {
+        -0.5f, -0.5f, +0.0f,
+        +0.5f, -0.5f, +0.0f,
+        -0.5f, +0.5f, +0.0f, 
+        +0.5f, +0.5f, +0.0f,
+    };
+
+    private static final int[] QUAD_INDICES = {
+        0, 2, 1,
+        2, 3, 1
+    };
+
     private Mesh loadMesh() {
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
-            3, 3, new int[] { 2, 3 });
-        builder.put(TRIANGLE_VERTS);
-        builder.put(0, 1, 2);
+            4, 6, new int[] { 3 });
+        builder.put(QUAD_VERTS);
+        builder.put(QUAD_INDICES);
         Mesh mesh = builder.createMesh();
         return mesh;
     }
 }
-
-````
-
-Output:
-
-![Hello World Triangle output](/res/hello_world_triangle.png)

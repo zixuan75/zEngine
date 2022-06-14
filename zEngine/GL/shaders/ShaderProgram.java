@@ -2,6 +2,10 @@ package zEngine.GL.shaders;
 
 import org.lwjgl.opengl.GL20;
 
+import zEngine.util.vector.Vector2f;
+import zEngine.util.vector.Vector3f;
+import zEngine.util.vector.Vector4f;
+
 /**
  * A wrapper around OpenGL's program
  * 
@@ -70,5 +74,35 @@ public class ShaderProgram {
      */
     public void unbind() {
         GL20.glUseProgram(0);
+    }
+
+    /**
+     * Gets the location of an uniform 
+     * @param name uniform name
+     * @return uniform location
+     */
+    public int getUniformLocation(String name) {
+        return GL20.glGetUniformLocation(id, name);
+    }
+
+    public void loadInt(String name, int value) { GL20.glUniform1i(getUniformLocation(name), value); }
+    public void loadFloat(String name, float value) { GL20.glUniform1f(getUniformLocation(name), value); }
+    public void loadVector2f(String name, Vector2f value) { 
+        GL20.glUniform2f(getUniformLocation(name), value.x, value.y); 
+    }
+    public void loadVector3f(String name, Vector3f value) { 
+        GL20.glUniform3f(getUniformLocation(name), value.x, value.y, value.z); 
+    }
+    public void loadVector4f(String name, Vector4f value) {
+        GL20.glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    }
+    public void loadFloatArray(String[] names, float[] values) {
+        for (int i = 0; i < names.length; i++) {
+            if (i < values.length) {
+                loadFloat(names[i], values[i]);
+            } else {
+                loadFloat(names[i], 0.0f);
+            }
+        }
     }
 }
