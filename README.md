@@ -73,3 +73,7 @@ class TriangleApp extends Application {
 }
 
 ````
+
+Output:
+
+![Hello World Triangle output](/res/hello_world_triangle.png)
