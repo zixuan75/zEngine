@@ -1,6 +1,6 @@
 package zEngine.application;
 
-public class AppRunner {
+public class AppManager {
     public static void runApplication(IApplication application) {
         application.start();
         while (!application.isCloseRequested()) {

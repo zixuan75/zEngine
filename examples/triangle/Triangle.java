@@ -4,6 +4,7 @@ import zEngine.GL.buffers.*;
 import static zEngine.GL.functions.GLFunc.*;
 import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
+import zEngine.application.*;
 import zEngine.glfw.*;
 
 /**
@@ -11,61 +12,70 @@ import zEngine.glfw.*;
  * 
  * @author zixuan
  */
-class TriangleExample {
+class TriangleApp implements IApplication {
+
+    private Display display;
+    private Mesh mesh;
+    private ShaderProgram program;
 
     public static void main(String[] args) {
-        Display display = loadDisplay();
-        /*
-         * Since 'examples' is a source folder, we can use triangle/ instead of examples/triangle/
-         */
-        ShaderProgram program = ShaderProgram.createProgram("triangle/triangle.vert.glsl", 
-            "triangle/triangle.frag.glsl");
-        Mesh mesh = loadMesh();
-        /*
-         * While loop.
-         */
-        while (!display.isCloseRequested()) {
-            /*
-             * The order of clearing, rendering and swapping is 
-             * very important.
-             * 
-             * The order should be -clearing, rendering, updating-
-             * as shown.
-             *
-             * If we clear just after we render, we will have 
-             * no output since the screen is cleared afterwards,
-             * before we can swap the buffer.
-             */
+        TriangleApp app = new TriangleApp();
+        AppManager.runApplication(app);
+    }
 
-            /* The following two lines clear the screen */
-            glClearColor(0, 0, 0, 0);
-            glClear();
-            /* This line resizes the viewport to fit */
-            glDimensions(Display.getWidth(), Display.getHeight());
-            /* The following three lines render the triangle */
-            program.bind();
-            mesh.render();
-            program.unbind();
-            /* Updates the display and swaps the buffers. */
-            display.update(); 
-        }
+    @Override
+    public void start() {
+        display = loadDisplay();
+        program = ShaderProgram.createProgram(
+            "examples/triangle/triangle.vert.glsl", 
+            "examples/triangle/triangle.frag.glsl");
+        mesh = loadMesh();
+    }
+
+    @Override
+    public void update() {
+        /*
+         * The order of clearing, rendering and swapping is 
+         * very important.
+         * 
+         * The order should be -clearing, rendering, updating-
+         * as shown.
+         *
+         * If we clear just after we render, we will have 
+         * no output since the screen is cleared afterwards,
+         * before we can swap the buffer.
+         */
+
+        /* The following two lines clear the screen */
+        glClearColor(0, 0, 0, 0);
+        glClear();
+        /* This line resizes the viewport to fit */
+        glDimensions(Display.getWidth(), Display.getHeight());
+        /* The following three lines render the triangle */
+        program.bind();
+        mesh.render();
+        program.unbind();
+        /* Updates the display and swaps the buffers. */
+        display.update(); 
+    }
+
+    @Override
+    public void end() {
         mesh.destroy();
         display.close();
     }
 
-    /*
-     * Creates the display
-     */
-    private static Display loadDisplay() {
-        
+    @Override
+    public boolean isCloseRequested() {
+        return display.isCloseRequested();
+    }
+    
+    private Display loadDisplay() {
         DisplayBuilder builder = new DisplayBuilder();
-        /* Passing our context attributes to GLFW */
         ContextAttribs attribs = new ContextAttribs()
             .withDefaultHints();
         builder.setContextAttribs(attribs);
-        /* Creates a centered display with width 1024, height 768, title "Window" */
         Display display = builder.create(1024, 768, "Window", true);
-
         /*
          * This function call is very important. It creates the OpenGL context 
          * and binds it to the window so that we can use our OpenGL functions. 
@@ -87,10 +97,7 @@ class TriangleExample {
         +0.0f, +1.0f, +0.0f  // Color
     };
 
-    /*
-     * Creates the triangle
-     */
-    private static Mesh loadMesh() {
+    private Mesh loadMesh() {
         /*
          * The first attribute is the storage type. STATIC_DRAW
          * is used because we do not want to modify our data.
@@ -104,9 +111,7 @@ class TriangleExample {
          */
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
             3, new int[] { 2, 3 });
-        /* We put the triangle vertices */
         builder.put(TRIANGLE_VERTS);
-        /* We call builder.createMesh to create our mesh */
         Mesh mesh = builder.createMesh();
         return mesh;
     }
