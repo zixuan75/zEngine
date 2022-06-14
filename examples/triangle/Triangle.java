@@ -60,7 +60,6 @@ class TriangleApp extends Application {
     @Override
     public void end() {
         mesh.destroy();
-        display.close();
     }
 
     @Override
