@@ -1,4 +1,4 @@
-package triangle;
+package quad;
 
 import zEngine.GL.buffers.*;
 import static zEngine.GL.functions.GLFunc.*;
