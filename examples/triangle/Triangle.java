@@ -12,20 +12,20 @@ import zEngine.glfw.*;
  * 
  * @author zixuan
  */
-class TriangleApp implements IApplication {
+class TriangleApp extends Application {
 
-    private Display display;
     private Mesh mesh;
     private ShaderProgram program;
 
     public static void main(String[] args) {
         TriangleApp app = new TriangleApp();
+        /* Creates a display with default settings and a default format */
+        app.createDisplay(new DisplaySettings(), new Format());
         AppManager.runApplication(app);
     }
 
     @Override
     public void start() {
-        display = loadDisplay();
         program = ShaderProgram.createProgram(
             "examples/triangle/triangle.vert.glsl", 
             "examples/triangle/triangle.frag.glsl");
@@ -55,8 +55,6 @@ class TriangleApp implements IApplication {
         program.bind();
         mesh.render();
         program.unbind();
-        /* Updates the display and swaps the buffers. */
-        display.update(); 
     }
 
     @Override
@@ -67,21 +65,7 @@ class TriangleApp implements IApplication {
 
     @Override
     public boolean isCloseRequested() {
-        return display.isCloseRequested();
-    }
-    
-    private Display loadDisplay() {
-        DisplayBuilder builder = new DisplayBuilder();
-        ContextAttribs attribs = new ContextAttribs()
-            .withDefaultHints();
-        builder.setContextAttribs(attribs);
-        Display display = builder.create(1024, 768, "Window", true);
-        /*
-         * This function call is very important. It creates the OpenGL context 
-         * and binds it to the window so that we can use our OpenGL functions. 
-         */
-        display.setCurrentContext();
-        return display;
+        return false;
     }
 
     /* The vertices of the triangle */
