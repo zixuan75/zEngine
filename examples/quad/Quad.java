@@ -4,13 +4,14 @@ import zEngine.GL.buffers.*;
 import static zEngine.GL.functions.GLFunc.*;
 import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
+import zEngine.GL.textures.Texture;
 import zEngine.application.*;
 import zEngine.glfw.*;
-import zEngine.util.vector.Vector3f;
 
 class QuadApp extends Application {
 
     private Mesh mesh;
+    private Texture texture;
     private ShaderProgram program;
 
     public static void main(String[] args) {
@@ -22,9 +23,10 @@ class QuadApp extends Application {
     @Override
     public void start() {
         program = ShaderProgram.createProgram(
-            "examples/triangle/quad.vert.glsl", 
-            "examples/triangle/quad.frag.glsl");
+            "examples/quad/quad.vert.glsl", 
+            "examples/quad/quad.frag.glsl");
         mesh = loadMesh();
+        texture = Texture.load("examples/quad/image.png");
     }
 
     @Override
@@ -33,8 +35,9 @@ class QuadApp extends Application {
         glClear();
         glDimensions(Display.getWidth(), Display.getHeight());
         program.bind();
-        program.loadVector3f("color", new Vector3f(0, 1, 0));
+        texture.bind(TEXTURE0);
         mesh.render();
+        texture.unbind();
         program.unbind();
     }
 
@@ -49,20 +52,20 @@ class QuadApp extends Application {
     }
 
     private static final float[] QUAD_VERTS = {
-        -0.5f, -0.5f, +0.0f,
-        +0.5f, -0.5f, +0.0f,
-        -0.5f, +0.5f, +0.0f, 
-        +0.5f, +0.5f, +0.0f,
+        -0.5f, -0.5f, +0.0f, 0.0f, 0.0f,
+        -0.5f, +0.5f, +0.0f, 0.0f, 1.0f,
+        +0.5f, +0.5f, +0.0f, 1.0f, 1.0f,
+        +0.5f, -0.5f, +0.0f, 1.0f, 0.0f,
     };
 
     private static final int[] QUAD_INDICES = {
-        0, 2, 1,
-        2, 3, 1
+        0, 1, 2,
+        0, 2, 3,
     };
 
     private Mesh loadMesh() {
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 
-            4, 6, new int[] { 3 });
+            4, 6, new int[] { 3, 2 });
         builder.put(QUAD_VERTS);
         builder.put(QUAD_INDICES);
         Mesh mesh = builder.createMesh();
