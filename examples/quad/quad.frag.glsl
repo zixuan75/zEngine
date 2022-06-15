@@ -2,7 +2,7 @@
 out vec4 fColor;
 
 in vec2 pass_texCoord;
-uniform sampler2D texture;
+uniform sampler2D image;
 void main() {
-  fColor = vec4(pass_texCoord, 0.0, 1.0);
+  fColor = texture(image, pass_texCoord);
 }
