@@ -41,7 +41,8 @@ public class KeyDevice {
 
     /**
      * Similar to isPressed, but checks whether a key is pressed but not held
-     * This function is recommended instead of isPressed
+     * This function is recommended instead of isPressed for precise measure
+     * ments.
      * @param keyId
      * @return a boolean
      */
