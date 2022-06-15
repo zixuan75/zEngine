@@ -2,6 +2,7 @@ package zEngine.GL.shaders;
 
 import org.lwjgl.opengl.GL20;
 
+import zEngine.util.matrix.Matrix4f;
 import zEngine.util.vector.Vector2f;
 import zEngine.util.vector.Vector3f;
 import zEngine.util.vector.Vector4f;
@@ -95,6 +96,9 @@ public class ShaderProgram {
     }
     public void loadVector4f(String name, Vector4f value) {
         GL20.glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    }
+    public void loadMatrix4f(String name, Matrix4f value) {
+        GL20.glUniformMatrix4fv(getUniformLocation(name), false, value.elements);
     }
     public void loadFloatArray(String[] names, float[] values) {
         for (int i = 0; i < names.length; i++) {

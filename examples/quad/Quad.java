@@ -7,13 +7,19 @@ import zEngine.GL.shaders.ShaderProgram;
 import zEngine.GL.textures.Texture;
 import zEngine.application.*;
 import zEngine.glfw.*;
-import zEngine.input.Key;
+import zEngine.input.*;
+import zEngine.util.math.zLinear;
+import zEngine.util.matrix.Matrix4f;
+import zEngine.util.vector.Vector3f;
 
 class QuadApp extends Application {
 
     private Mesh mesh;
     private Texture texture;
     private ShaderProgram program;
+
+    private Vector3f quadPosition = new Vector3f();
+    private float angle = 0.0f;
 
     public static void main(String[] args) {
         QuadApp app = new QuadApp();
@@ -35,10 +41,9 @@ class QuadApp extends Application {
         glClearColor(0, 0, 0, 0);
         glClear();
         glDimensions(Display.getWidth(), Display.getHeight());
-        if (Display.getKeyDevice().isPressedOnce(Key.KEY_Q)) {
-            System.out.println("YES!");
-        }
+        handleKeys();
         program.bind();
+        program.loadMatrix4f("model", calculateModel());
         texture.bind(TEXTURE0);
         mesh.render();
         texture.unbind();
@@ -56,15 +61,15 @@ class QuadApp extends Application {
     }
 
     private static final float[] QUAD_VERTS = {
-        -0.5f, -0.5f, +0.0f, 0.0f, 1.0f,
-        -0.5f, +0.5f, +0.0f, 0.0f, 0.0f,
-        +0.5f, +0.5f, +0.0f, 1.0f, 0.0f,
-        +0.5f, -0.5f, +0.0f, 1.0f, 1.0f,
+        -0.3f, +0.3f, +0.0f, 0.0f, 0.0f, // 1 -> 0
+        -0.3f, -0.3f, +0.0f, 0.0f, 1.0f, // 0 -> 1
+        +0.3f, -0.3f, +0.0f, 1.0f, 1.0f, // 3 -> 2
+        +0.3f, +0.3f, +0.0f, 1.0f, 0.0f, // 2 -> 3
     };
 
     private static final int[] QUAD_INDICES = {
-        0, 1, 2,
-        0, 2, 3,
+        1, 0, 3,
+        1, 3, 2,
     };
 
     private Mesh loadMesh() {
@@ -74,5 +79,38 @@ class QuadApp extends Application {
         builder.put(QUAD_INDICES);
         Mesh mesh = builder.createMesh();
         return mesh;
+    }
+
+    private Matrix4f calculateModel() {
+        Matrix4f translation = zLinear.translate(quadPosition);
+        Matrix4f rotation = zLinear.rotate(angle, new Vector3f(0, 0, 1));
+        return zLinear.multiply(rotation, translation);
+    }
+
+    private void handleKeys() {
+        KeyDevice device = Display.getKeyDevice();
+        if (device.isPressed(Key.KEY_W)) {
+            quadPosition.y += 0.03f;
+        } 
+
+        if (device.isPressed(Key.KEY_A)) {
+            quadPosition.x -= 0.03f;
+        }
+
+        if (device.isPressed(Key.KEY_S)) {
+            quadPosition.y -= 0.03f;
+        }
+
+        if (device.isPressed(Key.KEY_D)) {
+            quadPosition.x += 0.03f;
+        }
+
+        if (device.isPressed(Key.KEY_LEFT)) {
+            angle -= 0.4f;
+        }
+
+        if (device.isPressed(Key.KEY_RIGHT)) {
+            angle += 0.4f;
+        }
     }
 }

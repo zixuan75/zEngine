@@ -21,9 +21,9 @@ public class Vector3f implements Vector {
 	}
 	
 	public Vector3f() {
-		this.x = 1;
-		this.y = 1;
-		this.z = 1;
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
 	}
 	
 	public Vector3f(Vector2f a) {
@@ -78,7 +78,7 @@ public class Vector3f implements Vector {
 	
 	@Override
 	public Vector defVector() {
-		return new Vector3f(1, 1, 1);
+		return new Vector3f(0, 0, 0);
 	}
 	
 	public void set(float i, float j, float k) {
