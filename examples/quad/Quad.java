@@ -7,6 +7,7 @@ import zEngine.GL.shaders.ShaderProgram;
 import zEngine.GL.textures.Texture;
 import zEngine.application.*;
 import zEngine.glfw.*;
+import zEngine.input.Key;
 
 class QuadApp extends Application {
 
@@ -34,6 +35,9 @@ class QuadApp extends Application {
         glClearColor(0, 0, 0, 0);
         glClear();
         glDimensions(Display.getWidth(), Display.getHeight());
+        if (Display.getKeyDevice().isPressedOnce(Key.KEY_Q)) {
+            System.out.println("YES!");
+        }
         program.bind();
         texture.bind(TEXTURE0);
         mesh.render();
@@ -52,10 +56,10 @@ class QuadApp extends Application {
     }
 
     private static final float[] QUAD_VERTS = {
-        -0.5f, -0.5f, +0.0f, 0.0f, 0.0f,
-        -0.5f, +0.5f, +0.0f, 0.0f, 1.0f,
-        +0.5f, +0.5f, +0.0f, 1.0f, 1.0f,
-        +0.5f, -0.5f, +0.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f, +0.0f, 0.0f, 1.0f,
+        -0.5f, +0.5f, +0.0f, 0.0f, 0.0f,
+        +0.5f, +0.5f, +0.0f, 1.0f, 0.0f,
+        +0.5f, -0.5f, +0.0f, 1.0f, 1.0f,
     };
 
     private static final int[] QUAD_INDICES = {

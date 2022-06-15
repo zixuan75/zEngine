@@ -3,6 +3,8 @@ package zEngine.glfw;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 
+import zEngine.input.KeyDevice;
+
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class DisplayBuilder {
@@ -42,6 +44,8 @@ public class DisplayBuilder {
             }
             
         };
+        display.kDevice = new KeyDevice();
+        display.kDevice.bind(display.window);
         GLFW.glfwSetFramebufferSizeCallback(display.window, display.framebufferSizeCallback);
         if (centered) {
             display.setCenterPosition(0.5f, 0.5f);

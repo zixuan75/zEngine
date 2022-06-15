@@ -5,6 +5,8 @@ import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
+import zEngine.input.KeyDevice;
+
 /**
  * A class for handling the display. 
  * 
@@ -17,6 +19,7 @@ public class Display {
     protected int width;
     protected int height;
     protected GLFWFramebufferSizeCallback framebufferSizeCallback;
+    protected KeyDevice kDevice;
     public static Display current;
 
     protected static void setCurrentDisplay(Display display) {
@@ -37,6 +40,14 @@ public class Display {
      */
     public static int getHeight() {
         return current.height;
+    }
+
+    /**
+     * 
+     * @return key device of current display
+     */
+    public static KeyDevice getKeyDevice() {
+        return current.kDevice;
     }
 
     /**
