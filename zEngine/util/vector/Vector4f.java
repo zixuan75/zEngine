@@ -1,7 +1,7 @@
 package zEngine.util.vector;
 
 /*
- * ALl of this code was made months ago and I don't want to rewrite it or
+ * Most of this code was made months ago and I don't want to rewrite it or
  * provide any documentation because I'm too lazy to do so.
  */
 
@@ -73,7 +73,7 @@ public class Vector4f implements Vector {
 	
 	@Override
 	public Vector defVector() {
-		return new Vector4f(1, 1, 1, 1);
+		return new Vector4f(0, 0, 0, 0);
 	}
 	
 	public void print() {

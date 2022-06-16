@@ -4,11 +4,6 @@ package zEngine.util.math;
 import zEngine.util.matrix.*;
 import zEngine.util.vector.*;
 
-/*
- * ALl of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
-
 public class zLinear {
 
 	public static Vector2f translate(Vector2f a, Vector2f b) {
@@ -85,6 +80,14 @@ public class zLinear {
     public static float length(Vector4f a) {
         return (float) Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w);
     }
+
+    public static Vector2f compMult(Vector2f a, Vector2f b) {
+		return new Vector2f(a.x * b.x, a.y * b.y);
+    }
+
+	public static Vector3f compMult(Vector3f a, Vector3f b) {
+		return new Vector3f(a.x * b.x, a.y * b.y, a.z * b.z);
+	}
 	
 	public static Vector4f compMult(Vector4f a, Vector4f b) {
 		return new Vector4f(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
@@ -111,7 +114,7 @@ public class zLinear {
 		}
 		return res;
 	}
-	public static Matrix4f multiply(Matrix4f a, float b) {
+	private static Matrix4f multiply(Matrix4f a, float b) {
 		Matrix4f res = new Matrix4f();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -192,7 +195,7 @@ public class zLinear {
 	}
 
 	public static Matrix4f project(float fov, float aspect, float near, float far) {
-		Matrix4f result = new Matrix4f(0);
+		Matrix4f result = new Matrix4f();
 
 		float tanFOV = (float) Math.tan(Math.toRadians(fov) / 2);
 		float range = far - near;
@@ -202,6 +205,7 @@ public class zLinear {
 		result.set(2, 2, -((far + near) / range));
 		result.set(2, 3, -1.0f);
 		result.set(3, 2, -((2 * far * near) / range));
+		result.set(3, 3, 0);
 
 		return result;
 	}
@@ -220,23 +224,6 @@ public class zLinear {
 		result = multiply(translationMatrix, rotationMatrix);
 
 		return result;
-	}
-
-	public static Vector multiply(Matrix matrix, Vector vector) {
-		int size = 0;
-		if (matrix.size != vector.size())
-			throw new ArithmeticException("Matrix and vector sizes not equal");
-		else
-			size = matrix.size;
-		Vector res = vector.defVector();
-		for (int i = 0; i < size; i++) {
-			float dotProduct = 0;
-			for (int j = 0; j < size; j++) {
-				dotProduct += matrix.get(i, j) * vector.get(j);
-			}
-			res.set(i, dotProduct);
-		}
-		return res;
 	}
 
 	
@@ -296,10 +283,6 @@ public class zLinear {
 //
         return multiply(Inverse, OneOverDeterminant);
 	}
-
-    public static Vector2f compMult(Vector2f a, Vector2f b) {
-		return new Vector2f(a.x * b.x, a.y * b.y);
-    }
 
 	
 	

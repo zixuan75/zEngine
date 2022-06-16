@@ -1,69 +1,77 @@
 package zEngine.util.matrix;
 
 import java.util.Arrays;
-
-/*
- * ALl of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
+import zEngine.util.vector.Vector;
 
 public class Matrix {
-	public int size;
+	public int rows;
+	public int cols;
 	public float[] elements;
 	
-	public Matrix(int size) {
-		this.size = size;
-		elements = new float[size * size];
-		
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				set(i, j, 0);
-			}
-			set(i, i, 1);
-		}
+	public Matrix(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		elements = new float[rows * cols];
+		setIdentity();
 	}
-	
-	public Matrix(int size, int n) {
-		this.size = size;
-		elements = new float[size * size];
-		
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				set(i, j, 0);
-			}
-			set(i, i, n);
+
+	/**
+	 * Sets the matrix to the identity matrix
+	 * @throws RuntimeException
+	 */
+	public void setIdentity() {
+		if (rows != cols) {
+			throw new ArithmeticException("Cannot set rectangular matrix to identity: Matrix.setIdentity");
 		}
-	}
-	
-	public Matrix(int size, float[][] mat) {
-		this.size = size;
-		elements = new float[size * size];
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				set(i, j, mat[i][j]);
+		for (int x = 0; x < rows; x++) {
+			for (int y = 0; y < cols; y++) {
+				set(x, y, 0);
 			}
+			set(x, x, 1);
 		}
 	}
 	
 	
 
 	public float get(int x, int y) {
-		return elements[x * size + y];
+		return elements[x * rows + y];
 	}
 
+	/**
+	 * Sets a value based on the XY axis
+	 * @param x 
+	 * @param y
+	 * @param value
+	 */
 	public void set(int x, int y, float value) {
-		elements[x * size + y] = value;
+		elements[x * rows + y] = value;
 	}
 	
 	public void print() {
-		for (int i = 0; i < size; i++) {
+		for (int x = 0; x < cols; x++) {
 			System.out.print("( ");
-			for (int j = 0; j < size; j++) {
-				System.out.print(get(i, j) + " ");
+			for (int y = 0; y < rows; y++) {
+				System.out.print(get(x, y) + " ");
 			}
 			System.out.print(")");
 			System.out.println();
 		}
+	}
+
+	
+
+	public static Vector multiply(Matrix matrix, Vector vector) {
+		Vector res = vector.defVector();
+		if (matrix.cols != vector.size())
+			throw new ArithmeticException("Matrix.multiply");
+		for (int i = 0; i < matrix.rows; i++) {
+			float dotProduct = 0;
+			for (int j = 0; j < matrix.cols; j++) {
+				dotProduct += matrix.get(i, j) * vector.get(j);
+			}
+			res.set(i, dotProduct);
+		}
+		return res;
 	}
 	
 	

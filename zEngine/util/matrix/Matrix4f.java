@@ -2,23 +2,13 @@ package zEngine.util.matrix;
 
 import zEngine.util.vector.Vector4f;
 
-
-/*
- * ALl of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
-
 public class Matrix4f extends Matrix {
     public Matrix4f() {
-		super(4);
-	}
-	
-	public Matrix4f(int i) {
-		super(4, i);
+		super(4, 4);
 	}
 	
 	public Matrix4f(Vector4f a, Vector4f b, Vector4f c, Vector4f d) {
-		super(4);
+		super(4, 4);
 		set(0, 0, a.x);
 		set(1, 0, a.y);
 		set(2, 0, a.z);
