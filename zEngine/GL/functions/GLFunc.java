@@ -34,6 +34,20 @@ public class GLFunc {
     }
 
     /**
+     * Enables the depth test
+     */
+    public static void glEnableDepth() {
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+    }
+
+    /**
+     * Disables the depth test
+     */
+    public static void glDisableDepth() {
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+    }
+
+    /**
      * Sets the width and height of the viewport
      * @param W the preferred width
      * @param H the preferred height
