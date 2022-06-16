@@ -9,8 +9,9 @@ import zEngine.application.*;
 import zEngine.glfw.*;
 import zEngine.input.*;
 import zEngine.util.math.zLinear;
+import zEngine.util.matrix.Matrix3f;
 import zEngine.util.matrix.Matrix4f;
-import zEngine.util.vector.Vector3f;
+import zEngine.util.vector.Vector2f;
 
 class QuadApp extends Application {
 
@@ -18,7 +19,7 @@ class QuadApp extends Application {
     private Texture texture;
     private ShaderProgram program;
 
-    private Vector3f quadPosition = new Vector3f();
+    private Vector2f quadPosition = new Vector2f();
     private float angle = 0.0f;
 
     public static void main(String[] args) {
@@ -43,7 +44,7 @@ class QuadApp extends Application {
         glDimensions(Display.getWidth(), Display.getHeight());
         handleKeys();
         program.bind();
-        program.loadMatrix4f("model", calculateModel());
+        program.loadMatrix3f("model", calculateModel());
         texture.bind(TEXTURE0);
         mesh.render();
         texture.unbind();
@@ -81,10 +82,14 @@ class QuadApp extends Application {
         return mesh;
     }
 
-    private Matrix4f calculateModel() {
-        Matrix4f translation = zLinear.translate(quadPosition);
-        Matrix4f rotation = zLinear.rotate(angle, new Vector3f(0, 0, 1));
-        return zLinear.multiply(rotation, translation);
+    private Matrix3f calculateModel() {
+        // Matrix4f translation = zLinear.translate(quadPosition);
+        // Matrix4f rotation = zLinear.rotate(angle, new Vector3f(0, 0, 1));
+        // return zLinear.multiply(rotation, translation);
+
+        Matrix3f model = new Matrix3f();
+        Matrix3f.rotate(angle, model, model);
+        return model;
     }
 
     private void handleKeys() {

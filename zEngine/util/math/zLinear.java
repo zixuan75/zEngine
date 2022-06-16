@@ -107,9 +107,9 @@ public class zLinear {
 			for (int j = 0; j < 4; j++) {
 				float dotProduct = 0;
 				for (int k = 0; k < 4; k++) {
-					dotProduct += a.get(k, i) * b.get(j, k);
+					dotProduct += a.get(i, k) * b.get(k, j);
 				}
-				res.set(j, i, dotProduct); 
+				res.set(i, j, dotProduct); 
 			}
 		}
 		return res;
@@ -118,7 +118,7 @@ public class zLinear {
 		Matrix4f res = new Matrix4f();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				res.set(j, i, a.get(j, i) * b);
+				res.set(i, j, a.get(i, j) * b);
 			}
 		}
 		return res;
@@ -126,9 +126,9 @@ public class zLinear {
 	
 	public static Matrix4f translate(Vector3f translate) {
 		Matrix4f result = new Matrix4f();
-		result.set(0, 3, translate.x);
-		result.set(1, 3, translate.y);
-		result.set(2, 3, translate.z);
+		result.set(3, 0, translate.x);
+		result.set(3, 1, translate.y);
+		result.set(3, 2, translate.z);
 		return result;
 	}
 
@@ -139,15 +139,15 @@ public class zLinear {
 		float C = 1 - cos;
 
 		result.set(0, 0, cos + axis.x * axis.x * C);
-		result.set(1, 0, axis.x * axis.y * C - axis.z * sin);
-		result.set(2, 0, axis.x * axis.z * C + axis.y * sin);
+		result.set(0, 1, axis.x * axis.y * C - axis.z * sin);
+		result.set(0, 2, axis.x * axis.z * C + axis.y * sin);
 
-		result.set(0, 1, axis.y * axis.x * C + axis.z * sin);
+		result.set(1, 0, axis.y * axis.x * C + axis.z * sin);
 		result.set(1, 1, cos + axis.y * axis.y * C);
-		result.set(2, 1, axis.y * axis.z * C - axis.x * sin);
+		result.set(1, 2, axis.y * axis.z * C - axis.x * sin);
 
-		result.set(0, 2, axis.z * axis.x * C - axis.y * sin);
-		result.set(1, 2, axis.z * axis.y * C + axis.x * sin);
+		result.set(2, 0, axis.z * axis.x * C - axis.y * sin);
+		result.set(2, 1, axis.z * axis.y * C + axis.x * sin);
 		result.set(2, 2, cos + axis.z * axis.z * C);
 
 		return result;
@@ -187,8 +187,8 @@ public class zLinear {
 		result.set(0, 0, 1.0f / (aspect * tanFOV));
 		result.set(1, 1, 1.0f / tanFOV);
 		result.set(2, 2, -((far + near) / range));
-		result.set(2, 3, -((2 * far * near) / range));
-		result.set(3, 2, -1.0f);
+		result.set(2, 3, -1.0f);
+		result.set(3, 2, -((2 * far * near) / range));
 		result.set(3, 3, 0);
 
 		return result;

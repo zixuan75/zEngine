@@ -34,17 +34,10 @@ public class Matrix {
 	
 
 	public float get(int x, int y) {
-		return elements[y * rows + x];
+		return elements[x * rows + y];
 	}
-
-	/**
-	 * Sets a value based on the XY axis
-	 * @param x 
-	 * @param y
-	 * @param value
-	 */
 	public void set(int x, int y, float value) {
-		elements[y * rows + x] = value;
+		elements[x * rows + y] = value;
 	}
 	
 	public void print() {
@@ -67,7 +60,7 @@ public class Matrix {
 		for (int i = 0; i < matrix.rows; i++) {
 			float dotProduct = 0;
 			for (int j = 0; j < matrix.cols; j++) {
-				dotProduct += matrix.get(j, i) * vector.get(j);
+				dotProduct += matrix.get(i, j) * vector.get(j);
 			}
 			res.set(i, dotProduct);
 		}

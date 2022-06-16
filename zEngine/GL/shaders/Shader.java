@@ -39,8 +39,10 @@ public class Shader {
      */
     public String compile(String path) {
         try {
-            return compileSource(Files.lines(Paths.get(path))
-                .collect(Collectors.joining("\n")));
+            String source = Files.lines(Paths.get(path))
+                .collect(Collectors.joining("\n"));
+            source = source.replace("Z_MAT2DH", "mat3x2");
+            return compileSource(source);
         } catch (IOException e) {
             e.printStackTrace();
             return "";
