@@ -34,7 +34,7 @@ public class Matrix {
 	
 
 	public float get(int x, int y) {
-		return elements[x * rows + y];
+		return elements[y * rows + x];
 	}
 
 	/**
@@ -44,14 +44,14 @@ public class Matrix {
 	 * @param value
 	 */
 	public void set(int x, int y, float value) {
-		elements[x * rows + y] = value;
+		elements[y * rows + x] = value;
 	}
 	
 	public void print() {
 		for (int x = 0; x < cols; x++) {
 			System.out.print("( ");
 			for (int y = 0; y < rows; y++) {
-				System.out.print(get(x, y) + " ");
+				System.out.print(get(y, x) + " ");
 			}
 			System.out.print(")");
 			System.out.println();
@@ -67,7 +67,7 @@ public class Matrix {
 		for (int i = 0; i < matrix.rows; i++) {
 			float dotProduct = 0;
 			for (int j = 0; j < matrix.cols; j++) {
-				dotProduct += matrix.get(i, j) * vector.get(j);
+				dotProduct += matrix.get(j, i) * vector.get(j);
 			}
 			res.set(i, dotProduct);
 		}
