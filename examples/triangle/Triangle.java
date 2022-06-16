@@ -17,6 +17,24 @@ class TriangleApp extends Application {
     private Mesh mesh;
     private ShaderProgram program;
 
+    private static final String VERTEX_CODE = 
+        "#version 330 core\n" + 
+        "layout(location = 0) in vec2 position;\n" + 
+        "layout(location = 1) in vec3 color;\n" + 
+        "out vec4 vColor;\n" + 
+        "void main() {\n" + 
+        "gl_Position = vec4(position, 0.0, 1.0);\n" + 
+        "vColor = vec4(color.r, color.g, color.b, 1.0);\n" +
+        "}";
+
+    private static final String FRAGMENT_CODE = 
+        "#version 330 core\n" +
+        "in vec4 vColor;\n" + 
+        "out vec4 fColor;\n" + 
+        "void main() {\n" + 
+        "fColor = vColor;\n" + 
+        "}";
+
     public static void main(String[] args) {
         TriangleApp app = new TriangleApp();
         /* Creates a display with default settings and a default format */
@@ -26,9 +44,7 @@ class TriangleApp extends Application {
 
     @Override
     public void start() {
-        program = ShaderProgram.createProgram(
-            "examples/triangle/triangle.vert.glsl", 
-            "examples/triangle/triangle.frag.glsl");
+        program = ShaderProgram.createProgramSource(VERTEX_CODE, FRAGMENT_CODE);
         mesh = loadMesh();
     }
 
