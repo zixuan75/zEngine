@@ -1,12 +1,14 @@
 package ship;
 
-import zEngine.GL.buffers.Mesh;
-import zEngine.GL.buffers.MeshBuilder;
-import zEngine.GL.functions.GLEnum;
+import zEngine.GL.buffers.*;
+import static zEngine.GL.functions.GLFunc.*;
+import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
-import zEngine.util.math.zLinear;
-import zEngine.util.matrix.Matrix4f;
-import zEngine.util.vector.Vector3f;
+
+import zEngine.glfw.Display;
+import zEngine.input.*;
+import zEngine.util.matrix.Matrix3f;
+import zEngine.util.vector.Vector2f;
 
 public class Ship {
     private static final float[] VERTICES = {
@@ -27,19 +29,49 @@ public class Ship {
 
     private Mesh mesh;
     private ShaderProgram program = ShaderProgram.createProgram(VERTEX_PATH, FRAGMENT_PATH);
-    private Matrix4f transform = zLinear.scale(new Vector3f(0.3f));
+    private Matrix3f transform = new Matrix3f();
+    private Vector2f position = new Vector2f();
+    private float angle = 0.0f;
     public Ship() {
-        MeshBuilder builder = new MeshBuilder(GLEnum.STATIC_DRAW, 8, 6, new int[] {2});
+        MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 8, 6, new int[] {2});
         builder.put(VERTICES);
         builder.put(INDICES);
         mesh = builder.createMesh();
     }
 
     public void render() {
+        glClearColor(0, 0, 0, 0);
+        glClear();
+        glDimensions(Display.getWidth(), Display.getHeight());
+        update();
         program.bind();
-        program.loadMatrix4f("transform", transform);
+        loadTransform();
         mesh.render();
         program.unbind();
+    }
+
+    public void loadTransform() {
+        transform.setIdentity();
+        Matrix3f.translate(position, transform, transform);
+        Matrix3f.rotate(angle, transform, transform);
+        Matrix3f.scale(new Vector2f(0.2f), transform, transform);
+        program.loadMatrix3f("transform", transform);
+    }
+
+    public void update() {
+        KeyDevice device = Display.getKeyDevice();
+        if (device.isPressed(Key.KEY_LEFT)) {
+            angle -= 1.5f;
+        }
+
+        if (device.isPressed(Key.KEY_RIGHT)) {
+            angle += 1.5f;
+        }
+
+        if (device.isPressed(Key.KEY_UP)) {
+            position.x += 0.03f * (float) Math.sin(Math.toRadians(angle));
+            position.y += 0.03f * (float) Math.cos(Math.toRadians(angle));
+        }
     }
 
 

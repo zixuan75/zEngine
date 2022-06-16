@@ -52,4 +52,25 @@ public class Matrix3f extends Matrix{
         to.set(1, 1, sinX * b + cosX * e);
         to.set(1, 2, sinX * c + cosX * f);
     }
+
+    public static void scale(Vector2f scale, Matrix3f from, Matrix3f to) {
+        if (to == null)
+            to = new Matrix3f();
+        float x = scale.x;
+        float y = scale.y;
+        /* We have to set these beforehand */
+        float a = from.get(0, 0);
+        float b = from.get(0, 1);
+        float c = from.get(0, 2);
+        float d = from.get(1, 0);
+        float e = from.get(1, 1);
+        float f = from.get(1, 2);
+        to.set(from);
+        to.set(0, 0, x * a);
+        to.set(0, 1, x * b);
+        to.set(0, 2, x * c);
+        to.set(1, 0, y * d);
+        to.set(1, 1, y * e);
+        to.set(1, 2, y * f);
+    }
 }
