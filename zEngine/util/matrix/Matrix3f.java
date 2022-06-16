@@ -8,8 +8,8 @@ public class Matrix3f extends Matrix{
 	}
 
     public static void translate(Vector2f translate, Matrix3f from, Matrix3f to) {
-        // if (to == null)
-        //     to = new Matrix3f();
+        if (to == null)
+            to = new Matrix3f();
             
         float x = translate.x;
         float y = translate.y;
@@ -25,11 +25,11 @@ public class Matrix3f extends Matrix{
         float i = from.get(2, 2);
         to.set(from);
         to.set(0, 0, a + x * g);
-        to.set(0, 1, b + x * h);
-        to.set(0, 2, c + x * i);
-        to.set(1, 0, d + y * g);
+        to.set(1, 0, b + x * h);
+        to.set(2, 0, c + x * i);
+        to.set(0, 1, d + y * g);
         to.set(1, 1, e + y * h);
-        to.set(1, 2, f + y * i);
+        to.set(2, 1, f + y * i);
     }
 
     public static void rotate(float angle, Matrix3f from, Matrix3f to) {

@@ -60,10 +60,10 @@ class QuadApp extends Application {
     }
 
     private static final float[] QUAD_VERTS = {
-        -0.333f, +0.333f, +0.0f, 0.0f, 0.0f, // 1 -> 0
-        -0.333f, -0.333f, +0.0f, 0.0f, 1.0f, // 0 -> 1
-        +0.333f, -0.333f, +0.0f, 1.0f, 1.0f, // 3 -> 2
-        +0.333f, +0.333f, +0.0f, 1.0f, 0.0f, // 2 -> 3
+        -0.333f, +0.333f, +1.0f, 0.0f, 0.0f, // 1 -> 0
+        -0.333f, -0.333f, +1.0f, 0.0f, 1.0f, // 0 -> 1
+        +0.333f, -0.333f, +1.0f, 1.0f, 1.0f, // 3 -> 2
+        +0.333f, +0.333f, +1.0f, 1.0f, 0.0f, // 2 -> 3
     };
 
     private static final int[] QUAD_INDICES = {
@@ -87,13 +87,13 @@ class QuadApp extends Application {
 
         Matrix3f model = new Matrix3f();
         Matrix3f.translate(quadPosition, model, model);
+        Matrix3f.rotate(angle, model, model);
         return model;
     }
 
     private void handleKeys() {
         KeyDevice device = Display.getKeyDevice();
         if (device.isPressed(Key.KEY_W)) {
-            System.out.println("W pressed");
             quadPosition.y += 0.03f;
         } 
 
@@ -110,11 +110,11 @@ class QuadApp extends Application {
         }
 
         if (device.isPressed(Key.KEY_LEFT)) {
-            angle -= 0.4f;
+            angle -= 0.7f;
         }
 
         if (device.isPressed(Key.KEY_RIGHT)) {
-            angle += 0.4f;
+            angle += 0.7f;
         }
     }
 }

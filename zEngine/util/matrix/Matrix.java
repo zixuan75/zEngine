@@ -51,11 +51,12 @@ public class Matrix {
 		for (int x = 0; x < cols; x++) {
 			System.out.print("( ");
 			for (int y = 0; y < rows; y++) {
-				System.out.print(get(y, x) + " ");
+				System.out.print(get(x, y) + " ");
 			}
 			System.out.print(")");
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	
