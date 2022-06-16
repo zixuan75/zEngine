@@ -6,43 +6,50 @@ public class Matrix3f extends Matrix{
     public Matrix3f() {
 		super(3, 3);
 	}
-	
-	public static Matrix3f multiply(Matrix3f a, Matrix3f b, Matrix3f res) {
-		if (res == null)
-            res = new Matrix3f();
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				float dotProduct = 0;
-				for (int k = 0; k < 3; k++) {
-					dotProduct += a.get(i, k) * b.get(k, j);
-				}
-				res.set(i, j, dotProduct);
-			}
-		}
-		return res;
-	}
 
-    public static Matrix3f translate(Vector2f translate, Matrix3f from, Matrix3f to) {
-        if (to == null)
-            to = new Matrix3f();
-        Matrix3f mat = new Matrix3f();
-        mat.set(2, 0, translate.x);
-        mat.set(2, 1, translate.y);
-        Matrix3f.multiply(mat, from, to);
-        return to;
+    public static void translate(Vector2f translate, Matrix3f from, Matrix3f to) {
+        // if (to == null)
+        //     to = new Matrix3f();
+            
+        float x = translate.x;
+        float y = translate.y;
+        /* We have to set these beforehand */
+        float a = from.get(0, 0);
+        float b = from.get(0, 1);
+        float c = from.get(0, 2);
+        float d = from.get(1, 0);
+        float e = from.get(1, 1);
+        float f = from.get(1, 2);
+        float g = from.get(2, 0);
+        float h = from.get(2, 1);
+        float i = from.get(2, 2);
+        to.set(from);
+        to.set(0, 0, a + x * g);
+        to.set(0, 1, b + x * h);
+        to.set(0, 2, c + x * i);
+        to.set(1, 0, d + y * g);
+        to.set(1, 1, e + y * h);
+        to.set(1, 2, f + y * i);
     }
 
-    public static Matrix3f rotate(float angle, Matrix3f from, Matrix3f to) {
+    public static void rotate(float angle, Matrix3f from, Matrix3f to) {
         if (to == null)
             to = new Matrix3f();
-        Matrix3f mat = new Matrix3f();
         float cosX = (float) Math.cos(Math.toRadians(angle));
         float sinX = (float) Math.sin(Math.toRadians(angle));
-        mat.set(0, 0, cosX);
-        mat.set(1, 0, sinX);
-        mat.set(0, 1, -sinX);
-        mat.set(1, 1, cosX);
-        Matrix3f.multiply(from, mat, to);
-        return mat;
+        /* We have to set these beforehand */
+        float a = from.get(0, 0);
+        float b = from.get(0, 1);
+        float c = from.get(0, 2);
+        float d = from.get(1, 0);
+        float e = from.get(1, 1);
+        float f = from.get(1, 2);
+        to.set(from);
+        to.set(0, 0, cosX * a - sinX * d);
+        to.set(0, 1, cosX * b - sinX * e);
+        to.set(0, 2, cosX * c - sinX * f);
+        to.set(1, 0, sinX * a + cosX * d);
+        to.set(1, 1, sinX * b + cosX * e);
+        to.set(1, 2, sinX * c + cosX * f);
     }
 }

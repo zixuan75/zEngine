@@ -8,9 +8,7 @@ import zEngine.GL.textures.Texture;
 import zEngine.application.*;
 import zEngine.glfw.*;
 import zEngine.input.*;
-import zEngine.util.math.zLinear;
 import zEngine.util.matrix.Matrix3f;
-import zEngine.util.matrix.Matrix4f;
 import zEngine.util.vector.Vector2f;
 
 class QuadApp extends Application {
@@ -88,13 +86,14 @@ class QuadApp extends Application {
         // return zLinear.multiply(rotation, translation);
 
         Matrix3f model = new Matrix3f();
-        return Matrix3f.rotate(angle, model, model);
-        // return model;
+        Matrix3f.translate(quadPosition, model, model);
+        return model;
     }
 
     private void handleKeys() {
         KeyDevice device = Display.getKeyDevice();
         if (device.isPressed(Key.KEY_W)) {
+            System.out.println("W pressed");
             quadPosition.y += 0.03f;
         } 
 

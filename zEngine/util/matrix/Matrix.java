@@ -39,6 +39,13 @@ public class Matrix {
 	public void set(int x, int y, float value) {
 		elements[x * rows + y] = value;
 	}
+	public void set(Matrix matrix) {
+		for (int x = 0; x < rows; x++) {
+			for (int y = 0; y < cols; y++) {
+				set(x, y, matrix.get(x, y));
+			}
+		}
+	}
 	
 	public void print() {
 		for (int x = 0; x < cols; x++) {
