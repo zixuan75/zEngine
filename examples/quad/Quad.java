@@ -24,7 +24,7 @@ class QuadApp extends Application {
 
     public static void main(String[] args) {
         QuadApp app = new QuadApp();
-        app.createDisplay(new DisplaySettings(), new Format());
+        app.createDisplay(new DisplaySettings(700, 700), new Format());
         AppManager.runApplication(app);
     }
 
@@ -62,10 +62,10 @@ class QuadApp extends Application {
     }
 
     private static final float[] QUAD_VERTS = {
-        -0.3f, +0.3f, +0.0f, 0.0f, 0.0f, // 1 -> 0
-        -0.3f, -0.3f, +0.0f, 0.0f, 1.0f, // 0 -> 1
-        +0.3f, -0.3f, +0.0f, 1.0f, 1.0f, // 3 -> 2
-        +0.3f, +0.3f, +0.0f, 1.0f, 0.0f, // 2 -> 3
+        -0.333f, +0.333f, +0.0f, 0.0f, 0.0f, // 1 -> 0
+        -0.333f, -0.333f, +0.0f, 0.0f, 1.0f, // 0 -> 1
+        +0.333f, -0.333f, +0.0f, 1.0f, 1.0f, // 3 -> 2
+        +0.333f, +0.333f, +0.0f, 1.0f, 0.0f, // 2 -> 3
     };
 
     private static final int[] QUAD_INDICES = {

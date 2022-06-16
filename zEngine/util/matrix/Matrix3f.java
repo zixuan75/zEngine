@@ -29,7 +29,7 @@ public class Matrix3f extends Matrix{
         mat.set(2, 0, translate.x);
         mat.set(2, 1, translate.y);
         Matrix3f.multiply(mat, from, to);
-        return mat;
+        return to;
     }
 
     public static Matrix3f rotate(float angle, Matrix3f from, Matrix3f to) {
@@ -42,8 +42,7 @@ public class Matrix3f extends Matrix{
         mat.set(1, 0, sinX);
         mat.set(0, 1, -sinX);
         mat.set(1, 1, cosX);
-        System.out.println(mat.get(2, 2));
-        Matrix3f.multiply(mat, from, to);
+        Matrix3f.multiply(from, mat, to);
         return to;
     }
 }
