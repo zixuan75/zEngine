@@ -43,6 +43,6 @@ public class Matrix3f extends Matrix{
         mat.set(0, 1, -sinX);
         mat.set(1, 1, cosX);
         Matrix3f.multiply(from, mat, to);
-        return to;
+        return mat;
     }
 }

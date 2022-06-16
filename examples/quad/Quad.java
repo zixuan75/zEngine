@@ -88,8 +88,8 @@ class QuadApp extends Application {
         // return zLinear.multiply(rotation, translation);
 
         Matrix3f model = new Matrix3f();
-        Matrix3f.rotate(angle, model, model);
-        return model;
+        return Matrix3f.rotate(angle, model, model);
+        // return model;
     }
 
     private void handleKeys() {
