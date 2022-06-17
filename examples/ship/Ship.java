@@ -21,12 +21,13 @@ public class Ship {
 
     private static final Vector2f[] BOUNDARIES = {
         new Vector2f(+0.0f, +1.0f),
-        new Vector2f(-1.0f, -1.0f),
-        new Vector2f(+1.0f, -1.0f)
     };
 
     private static final Line[] BOUNDARY_LINES = {
-        new Line(new Vector2f(0f, 1f), new Vector2f(0f, 1f))
+        new Line(new Vector2f(0f, 1f), new Vector2f(0f, 1f)),
+        new Line(new Vector2f(0f, -1f), new Vector2f(0f, -1f)),
+        new Line(new Vector2f(1f, 0f), new Vector2f(1f, 0f)),
+        new Line(new Vector2f(-1f, 0f), new Vector2f(-1f, 0f))
     };
 
     private static final int[] INDICES = {
@@ -43,6 +44,7 @@ public class Ship {
     private Matrix3f transform = new Matrix3f();
     private Vector2f position = new Vector2f();
     private Vector2f velocity = new Vector2f();
+    private Line[] line = new Line[] {null, null, null, null};
     private float angle = 0.0f;
     public Ship() {
         MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 4, 6, new int[] {2});
@@ -70,16 +72,20 @@ public class Ship {
         program.loadMatrix3f("transform", transform);
     }
 
-    public void checkBoundaries(Line line) {
+    public void checkBoundaries(int i, Line line) {
+        boolean hasLines = false;
         for (Vector2f boundary: BOUNDARIES) {
             Vector2f transformedBoundary = Matrix3f.multiply(transform, boundary);
-            transformedBoundary.print();
-            System.out.println();
-            
+            if (!line.inLine(transformedBoundary)) {
+                this.line[i] = line;
+                hasLines = true;
+            }
         }
+        if (!hasLines) this.line[i] = null;
     }
 
     public void update() {
+
         KeyDevice device = Display.getKeyDevice();
         if (device.isPressed(Key.KEY_LEFT)) {
             angle -= 1.5f;
@@ -93,8 +99,9 @@ public class Ship {
             position.x += 0.03f * velocity.x;
             position.y += 0.03f * velocity.y;
         }
-        System.out.println(transform);
-        checkBoundaries(BOUNDARY_LINES[0]);
+        for (int i = 0; i < BOUNDARY_LINES.length; i++) {
+            checkBoundaries(i, BOUNDARY_LINES[i]);
+        }
         
         updateVelocity();
     }
@@ -102,8 +109,15 @@ public class Ship {
     public void updateVelocity() {
         velocity.x = (float) Math.sin(Math.toRadians(angle));
         velocity.y = (float) Math.cos(Math.toRadians(angle));
-    }
 
+        for (int i = 0; i < line.length; i++) {
+            Line linei = line[i];
+            if (linei != null) {
+                Vector2f perpendicularNormal = new Vector2f(-linei.normal.y, linei.normal.x);
+                velocity = velocity.project(perpendicularNormal);
+            }
+        }
+    }
 
     public void destroy() {
         mesh.destroy();

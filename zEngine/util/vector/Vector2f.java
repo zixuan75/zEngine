@@ -1,5 +1,7 @@
 package zEngine.util.vector;
 
+import zEngine.util.math.zLinear;
+
 /*
  * Most of this code was made months ago and I don't want to rewrite it or
  * provide any documentation because I'm too lazy to do so.
@@ -68,5 +70,7 @@ public class Vector2f implements Vector {
 		System.out.println("(" + x + " " + y + ")");
 	}
 
-	
+	public Vector2f project(Vector2f onto) {
+		return zLinear.scale(zLinear.normalize(onto), zLinear.dot(this, onto));
+	}
 }
