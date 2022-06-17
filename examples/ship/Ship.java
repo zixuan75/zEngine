@@ -72,7 +72,7 @@ public class Ship {
 
     public void checkBoundaries(Line line) {
         for (Vector2f boundary: BOUNDARIES) {
-            Vector2f transformedBoundary = Matrix3f.multiply(transform, new Vector2f());
+            Vector2f transformedBoundary = Matrix3f.multiply(transform, boundary);
             transformedBoundary.print();
             System.out.println();
             
@@ -82,12 +82,10 @@ public class Ship {
     public void update() {
         KeyDevice device = Display.getKeyDevice();
         if (device.isPressed(Key.KEY_LEFT)) {
-            updateVelocity();
             angle -= 1.5f;
         }
 
         if (device.isPressed(Key.KEY_RIGHT)) {
-            updateVelocity();
             angle += 1.5f;
         }
 
@@ -95,8 +93,10 @@ public class Ship {
             position.x += 0.03f * velocity.x;
             position.y += 0.03f * velocity.y;
         }
-        transform.print();
+        System.out.println(transform);
         checkBoundaries(BOUNDARY_LINES[0]);
+        
+        updateVelocity();
     }
 
     public void updateVelocity() {

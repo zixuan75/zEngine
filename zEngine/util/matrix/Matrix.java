@@ -46,12 +46,12 @@ public class Matrix {
 	public static Vector transform(Matrix matrix, Vector vector) {
 		if (vector.size() != matrix.cols) throw new ArithmeticException();
 		Vector result = VectorUtils.loadVector(vector.size());
-		for (int row = 0; row < matrix.rows; row++) {
+		for (int col = 0; col < matrix.rows; col++) {
 			float prod = 0;
-			for (int col = 0; col < matrix.cols; col++) {
-				prod += matrix.get(row, col) * vector.get(col);
+			for (int row = 0; row < matrix.rows; row++) {
+				prod += matrix.get(row, col) * vector.get(row);
 			}
-			result.set(row, prod);
+			result.set(col, prod);
 		}
 		return result;
 	}

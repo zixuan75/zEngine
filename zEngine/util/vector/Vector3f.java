@@ -22,8 +22,8 @@ public class Vector3f implements Vector {
 	}
 	public Vector3f(Vector2f a) {
 		this.x = a.x;
-		this.y = 0;
-		this.z = a.y;
+		this.y = a.y;
+		this.z = 0;
 	}
 	public Vector3f(Vector4f a) {
 		this.x = a.x;

@@ -1,6 +1,7 @@
 package zEngine.util.matrix;
 
 import zEngine.util.vector.Vector2f;
+import zEngine.util.vector.Vector3f;
 
 public class Matrix3f extends Matrix {
 
@@ -75,4 +76,20 @@ public class Matrix3f extends Matrix {
         to.set(1, 2, y * f);
     }
 
+    public static Vector2f multiply(Matrix3f op, Vector2f vic) {
+        Vector3f i = (Vector3f) Matrix.transform(op, new Vector3f(vic.x, vic.y, 1f));
+        return new Vector2f(i);
+    }
 }
+
+// Vector2f res = new Vector2f();
+//         float a = op.get(0, 0);
+//         float b = op.get(0, 1);
+//         float c = op.get(0, 2);
+//         float d = op.get(1, 0);
+//         float e = op.get(1, 1);
+//         float f = op.get(1, 2);
+//         float g = op.get(2, 0);
+//         float h = op.get(2, 1);
+//         float i = op.get(2, 2);
+//         res.x = 
