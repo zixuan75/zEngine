@@ -1,100 +1,22 @@
 package zEngine.util.matrix;
 
-import java.util.Arrays;
-import zEngine.util.vector.Vector;
-
-public class Matrix {
-	public int rows;
-	public int cols;
-	public float[] elements;
-	
-	public Matrix(int rows, int cols) {
-		this.rows = rows;
-		this.cols = cols;
-		elements = new float[rows * cols];
-		setIdentity();
-	}
+public interface Matrix {
+	/**
+	 * Returns the value of matrix entry with <b>row</b> row and <b>column</b> column
+	 * @param row row number
+	 * @param column column number
+	 * @return value
+	 */
+	float get(int row, int column);
 
 	/**
-	 * Sets the matrix to the identity matrix
-	 * @throws RuntimeException
+	 * Sets the matrix entry with <b>row</b> row and <b>column</b> column to <b>value</b>
+	 * @param row row number
+	 * @param column column number
+	 * @param value float value
 	 */
-	public void setIdentity() {
-		if (rows != cols) {
-			throw new ArithmeticException("Cannot set rectangular matrix to identity: Matrix.setIdentity");
-		}
-		for (int x = 0; x < rows; x++) {
-			for (int y = 0; y < cols; y++) {
-				set(x, y, 0);
-			}
-			set(x, x, 1);
-		}
-	}
-	
-	
+	void set(int row, int column, float value);
 
-	public float get(int x, int y) {
-		return elements[x * rows + y];
-	}
-	public void set(int x, int y, float value) {
-		elements[x * rows + y] = value;
-	}
-	public void set(Matrix matrix) {
-		for (int x = 0; x < rows; x++) {
-			for (int y = 0; y < cols; y++) {
-				set(x, y, matrix.get(x, y));
-			}
-		}
-	}
-	
-	public void print() {
-		for (int x = 0; x < cols; x++) {
-			System.out.print("( ");
-			for (int y = 0; y < rows; y++) {
-				System.out.print(get(x, y) + " ");
-			}
-			System.out.print(")");
-			System.out.println();
-		}
-		System.out.println();
-	}
-
-	
-
-	public static Vector multiply(Matrix matrix, Vector vector) {
-		Vector res = vector.defVector();
-		if (matrix.cols != vector.size())
-			throw new ArithmeticException("Matrix.multiply");
-		for (int i = 0; i < matrix.rows; i++) {
-			float dotProduct = 0;
-			for (int j = 0; j < matrix.cols; j++) {
-				dotProduct += matrix.get(j, i) * vector.get(j);
-			}
-			res.set(i, dotProduct);
-		}
-		return res;
-	}
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(elements);
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Matrix other = (Matrix) obj;
-		if (!Arrays.equals(elements, other.elements))
-			return false;
-		return true;
-	}
+	int getNumRows();
+	int getNumCols();
 }
