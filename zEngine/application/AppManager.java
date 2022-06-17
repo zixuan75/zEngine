@@ -1,7 +1,5 @@
 package zEngine.application;
 
-import zEngine.util.camera.OrbitalCamera;
-
 public class AppManager {
     /**
      * Runs the application
@@ -12,7 +10,6 @@ public class AppManager {
         while (!application.isCloseRequested() && !application.display.isCloseRequested()) {
             application.update();
             application.display.update();
-            OrbitalCamera.update();
         }
         application.end();
         application.display.close();

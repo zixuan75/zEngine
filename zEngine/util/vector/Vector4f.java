@@ -35,7 +35,6 @@ public class Vector4f implements Vector {
 	public float get(int i) {
 		return getArray()[i];
 	}
-
 	@Override
 	public void set(int i, float a) {
 		if (i == 0) {
@@ -60,6 +59,17 @@ public class Vector4f implements Vector {
 		y = y2;
 		z = i;
 		w = j;
-		
+	}
+	public static Vector4f translate(Vector4f a, Vector4f b) {
+		return new Vector4f(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+	}
+	public static Vector4f diff(Vector4f a, Vector4f b) {
+		return new Vector4f(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+	}
+	public static Vector4f scale(Vector4f a, float s) {
+		return new Vector4f(a.x * s, a.y * s, a.z * s, a.w * s);
+	}
+	public static Vector4f compMult(Vector4f a, Vector4f b) {
+		return new Vector4f(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
 	}
 }

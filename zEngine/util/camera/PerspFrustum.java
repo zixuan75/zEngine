@@ -1,6 +1,5 @@
 package zEngine.util.camera;
 
-import zEngine.util.math.zLinear;
 import zEngine.util.matrix.Matrix4f;
 
 public class PerspFrustum {
@@ -17,7 +16,7 @@ public class PerspFrustum {
     }
 
     public void update(float aspect) {
-        projection = zLinear.project(fov, aspect, near, far);
+        projection = Matrix4f.project(fov, aspect, near, far);
     }
     
     public Matrix4f getProjection() {
