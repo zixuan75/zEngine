@@ -1,5 +1,7 @@
 package zEngine.util.vector;
 
+import zEngine.util.math.zLinear;
+
 /*
  * ALl of this code was made months ago and I don't want to rewrite it or
  * provide any documentation because I'm too lazy to do so.
@@ -85,6 +87,10 @@ public class Vector3f implements Vector {
 		x = i;
 		y = j;
 		z = k;
+	}
+
+	public Vector3f project(Vector3f onto) {
+		return zLinear.scale(zLinear.normalize(onto), zLinear.dot(this, onto));
 	}
 	
 	public void print() {

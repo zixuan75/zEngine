@@ -68,7 +68,7 @@ public class Matrix {
 		for (int i = 0; i < matrix.rows; i++) {
 			float dotProduct = 0;
 			for (int j = 0; j < matrix.cols; j++) {
-				dotProduct += matrix.get(i, j) * vector.get(j);
+				dotProduct += matrix.get(j, i) * vector.get(j);
 			}
 			res.set(i, dotProduct);
 		}

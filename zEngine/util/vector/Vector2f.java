@@ -27,6 +27,11 @@ public class Vector2f implements Vector {
 		this.y = 0;
     }
 
+	public Vector2f(Vector3f f) {
+		this.x = f.x;
+		this.y = f.y;
+	}
+
     @Override
 	public int size() {
 		return 2;

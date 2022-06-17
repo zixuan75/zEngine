@@ -1,6 +1,7 @@
 package zEngine.util.matrix;
 
 import zEngine.util.vector.Vector2f;
+import zEngine.util.vector.Vector3f;
 
 public class Matrix3f extends Matrix{
     public Matrix3f() {
@@ -72,5 +73,9 @@ public class Matrix3f extends Matrix{
         to.set(1, 0, y * d);
         to.set(1, 1, y * e);
         to.set(1, 2, y * f);
+    }
+
+    public static Vector2f multiply(Matrix3f op, Vector2f vec) {
+        return new Vector2f((Vector3f) Matrix.multiply(op, new Vector3f(vec)));
     }
 }

@@ -7,6 +7,7 @@ import zEngine.GL.shaders.ShaderProgram;
 
 import zEngine.glfw.Display;
 import zEngine.input.*;
+import zEngine.util.collision.Line;
 import zEngine.util.matrix.Matrix3f;
 import zEngine.util.vector.Vector2f;
 
@@ -16,6 +17,16 @@ public class Ship {
         -1.0f, -1.0f, // 1
         +0.0f, -0.5f, // 2
         +1.0f, -1.0f, // 3
+    };
+
+    private static final Vector2f[] BOUNDARIES = {
+        new Vector2f(+0.0f, +1.0f),
+        new Vector2f(-1.0f, -1.0f),
+        new Vector2f(+1.0f, -1.0f)
+    };
+
+    private static final Line[] BOUNDARY_LINES = {
+        new Line(new Vector2f(0f, 1f), new Vector2f(0f, 1f))
     };
 
     private static final int[] INDICES = {
@@ -31,9 +42,10 @@ public class Ship {
     private ShaderProgram program = ShaderProgram.createProgram(VERTEX_PATH, FRAGMENT_PATH);
     private Matrix3f transform = new Matrix3f();
     private Vector2f position = new Vector2f();
+    private Vector2f velocity = new Vector2f();
     private float angle = 0.0f;
     public Ship() {
-        MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 8, 6, new int[] {2});
+        MeshBuilder builder = new MeshBuilder(STATIC_DRAW, 4, 6, new int[] {2});
         builder.put(VERTICES);
         builder.put(INDICES);
         mesh = builder.createMesh();
@@ -58,20 +70,38 @@ public class Ship {
         program.loadMatrix3f("transform", transform);
     }
 
+    public void checkBoundaries(Line line) {
+        for (Vector2f boundary: BOUNDARIES) {
+            Vector2f transformedBoundary = Matrix3f.multiply(transform, new Vector2f());
+            transformedBoundary.print();
+            System.out.println();
+            
+        }
+    }
+
     public void update() {
         KeyDevice device = Display.getKeyDevice();
         if (device.isPressed(Key.KEY_LEFT)) {
+            updateVelocity();
             angle -= 1.5f;
         }
 
         if (device.isPressed(Key.KEY_RIGHT)) {
+            updateVelocity();
             angle += 1.5f;
         }
 
         if (device.isPressed(Key.KEY_UP)) {
-            position.x += 0.03f * (float) Math.sin(Math.toRadians(angle));
-            position.y += 0.03f * (float) Math.cos(Math.toRadians(angle));
+            position.x += 0.03f * velocity.x;
+            position.y += 0.03f * velocity.y;
         }
+        transform.print();
+        checkBoundaries(BOUNDARY_LINES[0]);
+    }
+
+    public void updateVelocity() {
+        velocity.x = (float) Math.sin(Math.toRadians(angle));
+        velocity.y = (float) Math.cos(Math.toRadians(angle));
     }
 
 
