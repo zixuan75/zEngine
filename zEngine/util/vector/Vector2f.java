@@ -37,7 +37,6 @@ public class Vector2f implements Vector {
 		return 2;
 	}
 
-	@Override
 	public float[] getArray() {
 		float[] res = new float[2];
 		res[0] = x;
@@ -63,15 +62,6 @@ public class Vector2f implements Vector {
 	public void set(float x, float y) {
 		this.x = x;
 		this.y = y;
-	}
-	
-	public static Vector2f swapY(Vector2f a) {
-		return new Vector2f(a.x, -a.y);
-	}
-	
-	@Override
-	public Vector defVector() {
-		return new Vector2f(0, 0);
 	}
 	
 	public void print() {

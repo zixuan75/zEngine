@@ -1,12 +1,14 @@
 package zEngine.util.vector;
 
-/*
- * Most of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
-
 public class Vector4f implements Vector {
 	public float x, y, z, w;
+
+	public Vector4f() {
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
+		this.w = 0;
+	}
 	
 	public Vector4f(float x, float y, float z, float w) {
 		this.x = x;
@@ -14,33 +16,12 @@ public class Vector4f implements Vector {
 		this.z = z;
 		this.w = w;
 	}
-	public Vector4f(Vector3f a) {
-		this.x = a.x;
-		this.y = a.y;
-		this.z = a.z;
-		this.w = 1;
-	}
-	
-	public Vector4f(Vector3f a, float b) {
-		this.x = a.x;
-		this.y = a.y;
-		this.z = a.z;
-		this.w = b;
-	}
-	
-	public Vector4f(float a) {
-		this.x = a;
-		this.y = a;
-		this.z = a;
-		this.w = a;
-	}
 	
 	@Override
 	public int size() {
 		return 4;
 	}
 
-	@Override
 	public float[] getArray() {
 		float[] res = new float[4];
 		res[0] = x;
@@ -69,11 +50,6 @@ public class Vector4f implements Vector {
 		if (i == 3) {
 			w = a;
 		}
-	}
-	
-	@Override
-	public Vector defVector() {
-		return new Vector4f(0, 0, 0, 0);
 	}
 	
 	public void print() {

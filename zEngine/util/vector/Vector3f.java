@@ -2,11 +2,6 @@ package zEngine.util.vector;
 
 import zEngine.util.math.zLinear;
 
-/*
- * ALl of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
-
 public class Vector3f implements Vector {
 	public float x, y, z;
 	
@@ -15,31 +10,26 @@ public class Vector3f implements Vector {
 		this.y = y;
 		this.z = z;
 	}
-	
 	public Vector3f(float a) {
 		this.x = a;
 		this.y = a;
 		this.z = a;
 	}
-	
 	public Vector3f() {
 		this.x = 0;
 		this.y = 0;
 		this.z = 0;
 	}
-	
 	public Vector3f(Vector2f a) {
 		this.x = a.x;
 		this.y = 0;
 		this.z = a.y;
 	}
-	
 	public Vector3f(Vector4f a) {
 		this.x = a.x;
 		this.y = a.y;
 		this.z = a.z;
 	}
-	
 	public Vector3f(Vector3f a) {
 		this.x = a.x;
 		this.y = a.y;
@@ -50,8 +40,6 @@ public class Vector3f implements Vector {
 	public int size() {
 		return 3;
 	}
-
-	@Override
 	public float[] getArray() {
 		float[] res = new float[3];
 		res[0] = x;
@@ -59,12 +47,10 @@ public class Vector3f implements Vector {
 		res[2] = z;
 		return res;
 	}
-
 	@Override
 	public float get(int i) {
 		return getArray()[i];
 	}
-
 	@Override
 	public void set(int i, float a) {
 		if (i == 0) {
@@ -77,12 +63,6 @@ public class Vector3f implements Vector {
 			z = a;
 		}
 	}
-	
-	@Override
-	public Vector defVector() {
-		return new Vector3f(0, 0, 0);
-	}
-	
 	public void set(float i, float j, float k) {
 		x = i;
 		y = j;
@@ -91,10 +71,6 @@ public class Vector3f implements Vector {
 
 	public Vector3f project(Vector3f onto) {
 		return zLinear.scale(zLinear.normalize(onto), zLinear.dot(this, onto));
-	}
-	
-	public void print() {
-		System.out.println("(" + x + " " + y + " " + z + ")");
 	}
 
 	@Override
@@ -112,9 +88,6 @@ public class Vector3f implements Vector {
 		return result;
 	}
 	
-	public static boolean customEquals(Vector3f a, Vector3f b) {
-		return (a.x == b.x) && (a.y == b.y) && (a.z == b.z);
-	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -133,11 +106,6 @@ public class Vector3f implements Vector {
 			return false;
 		return true;
 	}
-
-    public Vector3f setY(float f) {
-        this.y = f;
-		return this;
-    }
 
 	public Vector3f translate(Vector3f f) {
 		this.x += f.x;

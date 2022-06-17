@@ -1,17 +1,17 @@
 package zEngine.util.matrix;
 
 import zEngine.util.vector.Vector2f;
-import zEngine.util.vector.Vector3f;
 
-public class Matrix3f extends Matrix{
+public class Matrix3f extends Matrix {
+
     public Matrix3f() {
-		super(3, 3);
-	}
+        super(3, 3);
+    }
 
     public static void translate(Vector2f translate, Matrix3f from, Matrix3f to) {
         if (to == null)
             to = new Matrix3f();
-            
+
         float x = translate.x;
         float y = translate.y;
         /* We have to set these beforehand */
@@ -75,7 +75,4 @@ public class Matrix3f extends Matrix{
         to.set(1, 2, y * f);
     }
 
-    public static Vector2f multiply(Matrix3f op, Vector2f vec) {
-        return new Vector2f((Vector3f) Matrix.multiply(op, new Vector3f(vec)));
-    }
 }
