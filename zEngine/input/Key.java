@@ -140,6 +140,8 @@ public class Key {
         MOD_CAPS          = GLFW.GLFW_MOD_CAPS_LOCK,
         MOD_NUM           = GLFW.GLFW_MOD_NUM_LOCK;
 
+    public static final int NO_KEY = -1;
+
     public int key;
     public boolean pressed = false;
     public boolean prev = false;

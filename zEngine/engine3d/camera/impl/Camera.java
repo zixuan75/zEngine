@@ -39,5 +39,6 @@ public class Camera implements ICamera {
     @Override
     public void update() {
         frustum.update((float) Display.getWidth() / (float) Display.getHeight());
+        Matrix4f.view(position, rotation, view);
     }
 }

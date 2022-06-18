@@ -16,7 +16,7 @@ public class PerspFrustum implements IFrustum {
         this.projection = new Matrix4f();
     }
     public void update(float aspect) {
-        projection = Matrix4f.project(fov, aspect, near, far);
+        Matrix4f.project(fov, aspect, near, far, projection);
     }
     @Override
     public Matrix4f getProjection() {
