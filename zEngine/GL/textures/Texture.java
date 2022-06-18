@@ -20,8 +20,8 @@ public class Texture {
     public static Texture load(String path) {
         Texture texture = new Texture(GL_TEXTURE_2D, glGenTextures());
         texture.bind();
-        texture.wrapMode = REPEAT;
-        texture.interpMode = CLAMP;
+        texture.wrapMode = CLAMP;
+        texture.interpMode = LINEAR;
         texture.setParams();
 
         Image image = new Image(path);

@@ -101,6 +101,14 @@ public class Vbo {
     }
 
     /**
+     * Puts a FloatBuffer into the buffer
+     * @param buf 
+     */
+    public void put(FloatBuffer buf) {
+        buffer.put(buf);
+    }
+
+    /**
      * Clears the buffer
      */
     public void clear() {
@@ -116,7 +124,7 @@ public class Vbo {
         }
     }
 
-    private static int getAttribLength(int[] attribs) {
+    protected static int getAttribLength(int[] attribs) {
         int length = 0;
         for (int i = 0; i < attribs.length; i++) {
             length += attribs[i];

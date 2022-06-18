@@ -106,8 +106,9 @@ public class Matrix4f extends Matrix {
 		result = multiply(scaleMatrix, multiply(rotationMatrix, translationMatrix));
 		return result;
 	}
-	public static Matrix4f project(float fov, float aspect, float near, float far) {
-		Matrix4f result = new Matrix4f();
+	public static Matrix4f project(float fov, float aspect, float near, float far, Matrix4f result) {
+		if (result == null)
+			result = new Matrix4f();
 
 		float tanFOV = (float) Math.tan(Math.toRadians(fov) / 2);
 		float range = far - near;
@@ -121,8 +122,9 @@ public class Matrix4f extends Matrix {
 
 		return result;
 	}
-	public static Matrix4f view(Vector3f position, Vector3f rotation) {
-		Matrix4f result = new Matrix4f();
+	public static Matrix4f view(Vector3f position, Vector3f rotation, Matrix4f result) {
+		if (result == null)
+			result = new Matrix4f();
 
 		Vector3f negative = new Vector3f(-position.x, -position.y, -position.z);
 		Matrix4f translationMatrix = translate(negative);

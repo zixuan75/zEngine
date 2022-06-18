@@ -1,8 +1,9 @@
-package zEngine.util.camera;
+package zEngine.engine3d.camera.impl;
 
+import zEngine.engine3d.camera.IFrustum;
 import zEngine.util.matrix.Matrix4f;
 
-public class PerspFrustum {
+public class PerspFrustum implements IFrustum {
     private float fov;
     private float near;
     private float far;
@@ -14,33 +15,28 @@ public class PerspFrustum {
         this.far = far;
         this.projection = new Matrix4f();
     }
-
     public void update(float aspect) {
         projection = Matrix4f.project(fov, aspect, near, far);
     }
-    
+    @Override
     public Matrix4f getProjection() {
         return projection;
     }
-
     public float getFov() {
         return fov;
     }
     public void setFov(float fov) {
         this.fov = fov;
     }
-    
     public float getNear() {
         return near;
     }
     public void setNear(float near) {
         this.near = near;
     }
-    
     public float getFar() {
         return far;
     }
-
     public void setFar(float far) {
         this.far = far;
     }
