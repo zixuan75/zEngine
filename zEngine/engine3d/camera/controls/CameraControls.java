@@ -1,10 +1,10 @@
 package zEngine.engine3d.camera.controls;
 
-import zEngine.glfw.Display;
-import zEngine.input.KeyDevice;
-import zEngine.util.vector.Vector3f;
+import static zEngine.input.keys.Key.*;
 
-import static zEngine.input.Key.*;
+import zEngine.glfw.Display;
+import zEngine.input.keys.KeyDevice;
+import zEngine.util.vector.Vector3f;
 
 public class CameraControls {
     private static final int MAX_KEYS = 2;

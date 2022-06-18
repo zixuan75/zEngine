@@ -5,7 +5,7 @@ import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
-import zEngine.input.KeyDevice;
+import zEngine.input.keys.KeyDevice;
 
 /**
  * A class for handling the display. 

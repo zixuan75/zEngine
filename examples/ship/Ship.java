@@ -7,6 +7,8 @@ import zEngine.GL.shaders.ShaderProgram;
 
 import zEngine.glfw.Display;
 import zEngine.input.*;
+import zEngine.input.keys.Key;
+import zEngine.input.keys.KeyDevice;
 import zEngine.util.collision.Line;
 import zEngine.util.matrix.Matrix3f;
 import zEngine.util.vector.Vector2f;

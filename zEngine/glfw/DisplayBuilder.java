@@ -3,7 +3,7 @@ package zEngine.glfw;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 
-import zEngine.input.KeyDevice;
+import zEngine.input.keys.KeyDevice;
 
 import static org.lwjgl.system.MemoryUtil.*;
 

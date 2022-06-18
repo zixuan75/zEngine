@@ -1,4 +1,4 @@
-package zEngine.input;
+package zEngine.input.keys;
 
 import org.lwjgl.glfw.GLFW;
 
