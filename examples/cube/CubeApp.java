@@ -51,14 +51,14 @@ public class CubeApp extends Application implements KeyReceiver {
     public void update() {
         glClearColor(0, 0, 0, 0);
         glClear();
-        glDimensions(Display.getWidth(), Display.getHeight());
         glCull();
         glEnableDepth();
+        glDimensions(Display.getWidth(), Display.getHeight());
+// [6]
         camera.update();
         program.bind();
         camera.load(program, "projection", "view");
         tex.bind(0);
-// [6]
         cube.render();
 // [7]
         tex.unbind();
