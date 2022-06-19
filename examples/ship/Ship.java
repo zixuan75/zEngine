@@ -8,12 +8,13 @@ import zEngine.GL.shaders.ShaderProgram;
 import zEngine.glfw.Display;
 import zEngine.input.*;
 import zEngine.input.keys.Key;
-import zEngine.input.keys.KeyDevice;
+import zEngine.input.keys.KeyEvent;
+import zEngine.input.keys.KeyReceiver;
 import zEngine.util.collision.Line;
 import zEngine.util.matrix.Matrix3f;
 import zEngine.util.vector.Vector2f;
 
-public class Ship {
+public class Ship implements KeyReceiver {
     private static final float[] VERTICES = {
         +0.0f, +1.0f, // 0
         -1.0f, -1.0f, // 1
@@ -88,19 +89,19 @@ public class Ship {
 
     public void update() {
 
-        KeyDevice device = Display.getKeyDevice();
-        if (device.isPressed(Key.KEY_LEFT)) {
-            angle -= 1.5f;
-        }
+        // KeyDevice device = Display.getKeyDevice();
+        // if (device.isPressed(Key.KEY_LEFT)) {
+        //     angle -= 1.5f;
+        // }
 
-        if (device.isPressed(Key.KEY_RIGHT)) {
-            angle += 1.5f;
-        }
+        // if (device.isPressed(Key.KEY_RIGHT)) {
+        //     angle += 1.5f;
+        // }
 
-        if (device.isPressed(Key.KEY_UP)) {
-            position.x += 0.03f * velocity.x;
-            position.y += 0.03f * velocity.y;
-        }
+        // if (device.isPressed(Key.KEY_UP)) {
+        //     position.x += 0.03f * velocity.x;
+        //     position.y += 0.03f * velocity.y;
+        // }
         for (int i = 0; i < BOUNDARY_LINES.length; i++) {
             checkBoundaries(i, BOUNDARY_LINES[i]);
         }
@@ -123,5 +124,16 @@ public class Ship {
 
     public void destroy() {
         mesh.destroy();
+    }
+
+    @Override
+    public void handleKeyEvent(KeyEvent event) {
+        switch (event.key()) {
+            case Key.KEY_LEFT:
+                angle -= 1.5f;
+            case Key.KEY_RIGHT:
+                angle += 1.5f;
+        }
+        
     }
 }

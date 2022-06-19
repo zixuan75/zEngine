@@ -1,25 +1,34 @@
 package zEngine.input.keys;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sound.midi.Receiver;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
 public class KeyDevice {
-    public Key[] keys = new Key[Key.KEY_LAST];
+
+    private Map<Integer, KeyEvent> pressEvents = new HashMap<>();
+    private List<KeyReceiver> receivers = new ArrayList<>();
     private GLFWKeyCallback callback;
 
     public KeyDevice() {
-        for (int i = 0; i < keys.length; i++) {
-            keys[i] = new Key();
-            keys[i].key = i;
+        for (int i = 0; i < Key.KEY_LAST; i++) {
+            pressEvents.put(i, new KeyEvent(i, Key.NO_MODIFIER)); 
         }
         callback = new GLFWKeyCallback() {
 
             @Override
             public void invoke(long window, int keyId, int scancode, int action, int mods) {
-                
-                Key key = keys[keyId];  
-                key.pressed = (action != GLFW.GLFW_RELEASE);
-                keys[keyId] = key;
+                KeyEvent event = pressEvents.get(keyId);
+                event.addNewEvent(mods);
+                for (KeyReceiver receiver: receivers) {
+                    receiver.handleKeyEvent(event);
+                }
             }
             
         };
@@ -27,33 +36,11 @@ public class KeyDevice {
 
     }
 
-    /**
-     * Checks whether a key is pressed
-     * @param keyId
-     * @return a boolean
-     */
-    public boolean isPressed(int keyId) {
-        Key key = keys[keyId];  
-        boolean res = key.pressed;
-        key.prev = key.pressed;
-        return res;
-    }
-
-    /**
-     * Similar to isPressed, but checks whether a key is pressed but not held
-     * This function is recommended instead of isPressed for precise measure
-     * ments.
-     * @param keyId
-     * @return a boolean
-     */
-    public boolean isPressedOnce(int keyId) {
-        Key key = keys[keyId];  
-        boolean res = key.pressed && (!key.prev);
-        key.prev = key.pressed;
-        return res;
-    }
-
     public void bind(long window) {
         GLFW.glfwSetKeyCallback(window, callback);
+    }
+
+    public void addReceiver(KeyReceiver receiver) {
+        receivers.add(receiver);
     }
 }

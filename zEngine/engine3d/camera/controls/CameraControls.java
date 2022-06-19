@@ -34,6 +34,7 @@ public class CameraControls {
 
     }
     private void setDefaultKeys() {
+
         keys_up[0] = KEY_SPACE;
         keys_up[1] = keys_up[2] = keys_up[3] = NO_KEY;
         
@@ -55,13 +56,5 @@ public class CameraControls {
         keys_backward[0] = KEY_S;
         keys_backward[1] = KEY_DOWN;
         keys_backward[2] = keys_backward[3] = NO_KEY;
-    }
-    private boolean keyPressed(int[] keys) {
-        boolean keyPressed = false;
-        for (int i = 0; i < MAX_KEYS; i++) {
-            int key = keys[i];
-            if (Display.getKeyDevice().isPressed(key)) {keyPressed = true; }
-        }
-        return keyPressed;
     }
 }

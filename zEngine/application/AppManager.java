@@ -1,5 +1,7 @@
 package zEngine.application;
 
+import zEngine.input.keys.KeyReceiver;
+
 public class AppManager {
     /**
      * Runs the application
@@ -7,6 +9,8 @@ public class AppManager {
      */
     public static void runApplication(Application application) {
         application.start();
+        
+        application.display.kDevice.addReceiver((KeyReceiver) application);
         while (!application.isCloseRequested() && !application.display.isCloseRequested()) {
             application.update();
             application.display.update();

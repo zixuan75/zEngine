@@ -19,7 +19,7 @@ public class Display {
     protected int width;
     protected int height;
     protected GLFWFramebufferSizeCallback framebufferSizeCallback;
-    protected KeyDevice kDevice;
+    public KeyDevice kDevice;
     public static Display current;
 
     protected static void setCurrentDisplay(Display display) {

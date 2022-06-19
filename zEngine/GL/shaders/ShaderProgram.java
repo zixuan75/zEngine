@@ -101,6 +101,8 @@ public class ShaderProgram {
     public void loadMatrix3f(String name, Matrix3f value) {
         GL20.glUniformMatrix3fv(getUniformLocation(name), false, value.elements);
     }
+
+    
     public void loadMatrix4f(String name, Matrix4f value) {
         GL20.glUniformMatrix4fv(getUniformLocation(name), false, value.elements);
     }

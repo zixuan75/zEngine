@@ -1,6 +1,8 @@
 package zEngine.util.mesh;
 
 import zEngine.GL.buffers.Mesh;
+import zEngine.GL.buffers.MeshBuilder;
+import zEngine.GL.functions.GLEnum;
 
 public class ObjectGenerator {
     
@@ -70,5 +72,11 @@ public class ObjectGenerator {
             -1.0f,  1.0f, -1.0f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f, // top-left
             -1.0f,  1.0f,  1.0f, 0.0f, 0.0f,  0.0f,  1.0f,  0.0f, // bottom-left        
         };
+    }
+
+    public static Mesh createCube() {
+        MeshBuilder builder = new MeshBuilder(GLEnum.STATIC_DRAW, 36, -1, new int[] {3, 2, 3});
+        builder.put(cubeMesh());
+        return builder.createMesh();
     }
 }

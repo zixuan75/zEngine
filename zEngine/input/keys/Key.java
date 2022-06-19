@@ -141,6 +141,7 @@ public class Key {
         MOD_NUM           = GLFW.GLFW_MOD_NUM_LOCK;
 
     public static final int NO_KEY = -1;
+    public static final int NO_MODIFIER = -1;
 
     public int key;
     public boolean pressed = false;
