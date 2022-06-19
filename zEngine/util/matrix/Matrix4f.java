@@ -134,7 +134,7 @@ public class Matrix4f extends Matrix {
 
 		Matrix4f rotationMatrix = multiply(rotZMatrix, multiply(rotYMatrix, rotXMatrix));
 
-		result = multiply(translationMatrix, rotationMatrix);
+		result.set(multiply(translationMatrix, rotationMatrix));
 
 		return result;
 	}

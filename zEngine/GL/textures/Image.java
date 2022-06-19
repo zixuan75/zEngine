@@ -18,6 +18,7 @@ public class Image {
         width = BufferUtils.createIntBuffer(1);
         height = BufferUtils.createIntBuffer(1);
         channels = BufferUtils.createIntBuffer(1);
+        
         image = STBImage.stbi_load(filepath, width, height, channels, 0);
     }
 

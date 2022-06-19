@@ -7,7 +7,7 @@ public class AppManager {
      */
     public static void runApplication(Application application) {
         application.start();
-        while (!application.isCloseRequested() && !application.display.isCloseRequested()) {
+        while (!application.display.isCloseRequested() && !application.closed) {
             application.update();
             application.display.update();
         }

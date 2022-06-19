@@ -113,6 +113,12 @@ public class Vector3f implements Vector {
 		this.z += f.z;
 		return this;
 	}
+	public Vector3f translate(float x, float y, float z) {
+		this.x += x;
+		this.y += y;
+		this.z += z;
+		return this;
+	}
 	
 	public Vector3f scale(float f) {
 		this.x *= f;

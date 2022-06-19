@@ -55,4 +55,19 @@ public class GLFunc {
     public static void glDimensions(int W, int H) {
         GL11.glViewport(0, 0, W, H);
     } 
+
+    /**
+     * Culls faces. This is an OpenGL optimization
+     */
+    public static void glCull() {
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glCullFace(GL11.GL_BACK);
+    }
+
+    /**
+     * Disables culling
+     */
+    public static void glStopCull() {
+        GL11.glDisable(GL11.GL_CULL_FACE);
+    }
 }

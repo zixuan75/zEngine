@@ -1,5 +1,6 @@
 package zEngine.engine3d.camera.impl;
 
+import zEngine.GL.shaders.ShaderProgram;
 import zEngine.engine3d.camera.ICamera;
 import zEngine.engine3d.camera.IFrustum;
 import zEngine.glfw.Display;
@@ -40,5 +41,10 @@ public class Camera implements ICamera {
     public void update() {
         frustum.update((float) Display.getWidth() / (float) Display.getHeight());
         Matrix4f.view(position, rotation, view);
+    }
+
+    public void load(ShaderProgram program, String proj, String view) {
+        program.loadMatrix4f(proj, getProjectionMatrix());
+        program.loadMatrix4f(view, getViewMatrix());
     }
 }

@@ -5,6 +5,7 @@ import zEngine.glfw.DisplayBuilder;
 
 public abstract class Application {
     protected Display display;
+    protected boolean closed = false;
 
     /**
      * Helper function; creates the display
@@ -22,5 +23,8 @@ public abstract class Application {
     public abstract void start();
     public abstract void update();
     public abstract void end();
-    public abstract boolean isCloseRequested();
+
+    protected void close() {
+        this.closed = true;
+    }
 }

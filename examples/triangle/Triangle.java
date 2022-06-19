@@ -78,11 +78,6 @@ class TriangleApp extends Application {
         mesh.destroy();
     }
 
-    @Override
-    public boolean isCloseRequested() {
-        return false;
-    }
-
     /* The vertices of the triangle */
     private static final float[] TRIANGLE_VERTS = {
         // Vertex 0

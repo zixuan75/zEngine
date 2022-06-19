@@ -1,60 +1,53 @@
 package zEngine.engine3d.camera.controls;
 
-import static zEngine.input.keys.Key.*;
-
-import zEngine.glfw.Display;
-import zEngine.input.keys.KeyDevice;
-import zEngine.util.vector.Vector3f;
+import zEngine.engine3d.camera.impl.Camera;
+import zEngine.util.vector.Vector2f;
 
 public class CameraControls {
-    private static final int MAX_KEYS = 2;
-    // public int[] keys_up = {KEY_SPACE};
-    // public int[] keys_down = {KEY_LSHIFT};
-    // public int[] keys_left = {KEY_A, KEY_LEFT};
-    // public int[] keys_right = {KEY_D, KEY_RIGHT};
-    // public int[] keys_forward = {KEY_W, KEY_UP};
-    // public int[] keys_backward = {KEY_S, KEY_DOWN};
-    public int[] keys_up       = new int[MAX_KEYS];
-    public int[] keys_down     = new int[MAX_KEYS];
-    public int[] keys_left     = new int[MAX_KEYS];
-    public int[] keys_right    = new int[MAX_KEYS];
-    public int[] keys_forward  = new int[MAX_KEYS];
-    public int[] keys_backward = new int[MAX_KEYS];
     public int orient = Orientation.EYE_ORIENT;
-    public float moveSpeed = 0.2f;
+    private float x = 0f;
+    private float z = 0f;
+    private Camera camera;
 
-    public CameraControls() {
-        setDefaultKeys();
+    public CameraControls(Camera camera) {
+        this.camera = camera;
     }
-    public void keyUpdate(Vector3f position, Vector3f rotation) {
-        float x = (float) Math.sin(Math.toRadians(rotation.y)) * moveSpeed;
-		float z = (float) Math.cos(Math.toRadians(rotation.y)) * moveSpeed;
+    public void resync(Camera cam) {
+        cam.position = this.camera.position;
+        cam.rotation = this.camera.rotation;
     }
-    public void mouseUpdate(Vector3f rotation) {
-
+    public void rotate(Vector2f delta) {
+        x = (float) Math.sin(Math.toRadians(camera.rotation.y));
+		z = (float) Math.cos(Math.toRadians(camera.rotation.y));
     }
-    private void setDefaultKeys() {
-
-        keys_up[0] = KEY_SPACE;
-        keys_up[1] = keys_up[2] = keys_up[3] = NO_KEY;
-        
-        keys_down[0] = KEY_LSHIFT;
-        keys_down[1] = keys_down[2] = keys_down[3] = NO_KEY;
-
-        keys_left[0] = KEY_A;
-        keys_left[1] = KEY_LEFT;
-        keys_left[2] = keys_left[3] = NO_KEY;
-
-        keys_right[0] = KEY_D;
-        keys_right[1] = KEY_RIGHT;
-        keys_right[2] = keys_right[3] = NO_KEY;
-
-        keys_forward[0] = KEY_W;
-        keys_forward[1] = KEY_UP;
-        keys_forward[2] = keys_forward[3] = NO_KEY;
-
-        keys_backward[0] = KEY_S;
-        keys_backward[1] = KEY_DOWN;
-        keys_backward[2] = keys_backward[3] = NO_KEY;
+    public void moveUp(float amount) {
+        camera.position.y += amount;
+    }
+    public void moveDown(float amount) {
+        camera.position.y -= amount;
+    }
+    public void moveLeft(float amount) {
+        if (orient == Orientation.EYE_ORIENT)
+            camera.position.translate(-z * amount, 0, x * amount);
+        else if (orient == Orientation.WORLD_ORIENT) 
+            camera.position.x -= amount;
+    }
+    public void moveRight(float amount) {
+        if (orient == Orientation.EYE_ORIENT)
+            camera.position.translate(z * amount, 0, -x * amount);
+        else if (orient == Orientation.WORLD_ORIENT) 
+            camera.position.x += amount;
+    }
+    public void moveForward(float amount) {
+        if (orient == Orientation.EYE_ORIENT)
+            camera.position.translate(-x * amount, 0, -z * amount);
+        else if (orient == Orientation.WORLD_ORIENT) 
+            camera.position.z -= amount;
+    }
+    public void moveBackward(float amount) {
+        if (orient == Orientation.EYE_ORIENT)
+            camera.position.translate(x * amount, 0, z * amount);
+        else if (orient == Orientation.WORLD_ORIENT) 
+            camera.position.z += amount;
     }
 }

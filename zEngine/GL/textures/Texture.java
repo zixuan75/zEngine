@@ -23,7 +23,6 @@ public class Texture {
         texture.wrapMode = CLAMP;
         texture.interpMode = LINEAR;
         texture.setParams();
-
         Image image = new Image(path);
         texture.loadImage(image);
         image.delete();
@@ -52,8 +51,9 @@ public class Texture {
         int width = image.width.get(0);
         int height = image.height.get(0);
         if (image.image != null) {
-            glTexImage2D(target, 0, GL_RGBA, width, height, 
-                0, GL_RGBA, GL_UNSIGNED_BYTE, image.image);
+            int fmt = loadTextureFormat(image.channels.get(0));
+            glTexImage2D(target, 0, fmt, width, height, 
+                0, fmt, GL_UNSIGNED_BYTE, image.image);
             GL30.glGenerateMipmap(target);
         } else {
             throw new RuntimeException("Could not find image at path: " + image.path);
@@ -72,12 +72,26 @@ public class Texture {
     }
 
     public void bind(int i) {
-        
         GL13.glActiveTexture(i);
         glBindTexture(target, id);
     }
 
     public void unbind() {
         glBindTexture(target, 0);
+    }
+
+    public void destroy() {
+        glDeleteTextures(id);
+    }
+
+    private int loadTextureFormat(int channels) {
+        if (channels == 1) {
+            return GL_RED;
+        } else if (channels == 3) {
+            return GL_RGB;
+        } else if (channels == 4) {
+            return GL_RGBA;
+        }
+        return -1;
     }
 }
