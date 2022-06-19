@@ -6,8 +6,6 @@ import static zEngine.GL.functions.GLEnum.*;
 import zEngine.GL.shaders.ShaderProgram;
 import zEngine.application.*;
 import zEngine.glfw.*;
-import zEngine.input.keys.Key;
-import zEngine.input.keys.KeyEvent;
 
 /**
  * This simple example demonstrates zEngine

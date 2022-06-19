@@ -55,13 +55,17 @@ public class ShaderProgram {
         GL20.glLinkProgram(id);
         GL20.glDetachShader(id, vertexShader.id);
         GL20.glDetachShader(id, fragmentShader.id);
-        GL20.glDeleteProgram(vertexShader.id);
-        GL20.glDeleteProgram(fragmentShader.id);
+        GL20.glDeleteShader(vertexShader.id);
+        GL20.glDeleteShader(fragmentShader.id);
         return new ShaderProgram(id);
     }
 
     private ShaderProgram(int id) {
         this.id = id;
+    }
+
+    public void delete() {
+        GL20.glDeleteProgram(id);
     }
 
     /**

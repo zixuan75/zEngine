@@ -2,7 +2,6 @@ package zEngine.application;
 
 import zEngine.glfw.Display;
 import zEngine.glfw.DisplayBuilder;
-import zEngine.input.keys.KeyReceiver;
 
 public abstract class Application {
     protected Display display;
