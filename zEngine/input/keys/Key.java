@@ -142,8 +142,4 @@ public class Key {
 
     public static final int NO_KEY = -1;
     public static final int NO_MODIFIER = -1;
-
-    public int key;
-    public boolean pressed = false;
-    public boolean prev = false;
 }
