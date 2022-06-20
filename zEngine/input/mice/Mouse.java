@@ -12,24 +12,34 @@ public class Mouse {
 
     private Map<Integer, MouseEvent> pressEvents = new HashMap<>();
     private List<MouseReceiver> receivers = new ArrayList<>();
-    private Vector2f mousePos;
+    private Map<MouseReceiver, MouseEvent> receiversToEvents = new HashMap<>();
+    private Vector2f mousePos = new Vector2f();
 
     private GLFWMouseButtonCallback mousePressCallback;
     private GLFWCursorPosCallback mouseMoveCallback;
     
     public Mouse() {
-        for (int i = 0; i < MousePress.MOUSE_BUTTON_LAST; i++) {
-            pressEvents.put(i, new MouseEvent(i, new Vector2f())); 
+        for (int i = 0; i < MousePress.BUTTON_LAST; i++) {
+            pressEvents.put(i, new MouseEvent(i)); 
         }
         mousePressCallback = new GLFWMouseButtonCallback() {
 
             @Override
             public void invoke(long window, int button, int action, int mods) {
                 MouseEvent event = pressEvents.get(button);
-                event.addNewEvent(mousePos);
+                event.addNewEvent(mousePos, action);
                 for (MouseReceiver receiver: receivers) {
                     receiver.handleMouseEvent(event);
+                    receiversToEvents.put(receiver, event);
                 }
+            }
+        };
+
+        mouseMoveCallback = new GLFWCursorPosCallback() {
+
+            @Override
+            public void invoke(long window, double xpos, double ypos) {
+                mousePos.set((float) xpos, (float) ypos);
             }
             
         };
@@ -38,5 +48,17 @@ public class Mouse {
     public void bind(long window) {
         GLFW.glfwSetMouseButtonCallback(window, mousePressCallback);
         GLFW.glfwSetCursorPosCallback(window, mouseMoveCallback);
+    }
+
+    public void addReceiver(MouseReceiver receiver) {
+        receivers.add(receiver);
+    }
+
+    public void invoke(MouseReceiver receiver) {
+        if (receiversToEvents.containsKey(receiver)) {
+            MouseEvent event = receiversToEvents.get(receiver);
+            event.setMousePos(mousePos);
+            receiver.handleMouseEvent(event);
+        }
     }
 }

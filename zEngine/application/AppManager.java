@@ -8,6 +8,7 @@ public class AppManager {
     public static void runApplication(Application application) {
         application.start();
         while (!application.display.isCloseRequested() && !application.closed) {
+            application.paint();
             application.update();
             application.display.update();
         }

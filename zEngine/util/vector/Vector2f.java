@@ -1,12 +1,5 @@
 package zEngine.util.vector;
 
-import zEngine.util.math.zLinear;
-
-/*
- * Most of this code was made months ago and I don't want to rewrite it or
- * provide any documentation because I'm too lazy to do so.
- */
-
 public class Vector2f implements Vector {
 	
 	public float x;
@@ -65,12 +58,63 @@ public class Vector2f implements Vector {
 		this.x = x;
 		this.y = y;
 	}
+
+	
+
+    public void set(Vector2f a) {
+		this.x = a.x;
+		this.y = a.y;
+    }
 	
 	public void print() {
 		System.out.println("(" + x + " " + y + ")");
 	}
 
 	public Vector2f project(Vector2f onto) {
-		return zLinear.scale(zLinear.normalize(onto), zLinear.dot(this, onto));
+		return Vector2f.scale(Vector2f.normalize(onto), Vector2f.dot(this, onto));
 	}
+
+	
+	
+	public float length() {
+		return (float) Math.sqrt(x * x + y * y);
+	}
+
+	public static Vector2f normalize(Vector2f a) {
+		float length = a.length();
+		return new Vector2f(a.x / length, a.y / length);
+	}
+
+	public void normalize() {
+		float length = length();
+		x /= length;
+		y /= length;
+	}
+	
+	public static float dot(Vector2f a, Vector2f b) {
+		return a.x * b.x + a.y * b.y;
+	}
+	
+	public static Vector2f translate(Vector2f a, Vector2f b) {
+		return new Vector2f(a.x + b.x, a.y + b.y);
+	}
+
+	public static Vector2f diff(Vector2f a, Vector2f b) {
+		return new Vector2f(a.x - b.x, a.y - b.y);
+	}
+
+	public static Vector2f diff(Vector2f a, Vector2f b, Vector2f res) {
+		if (res == null)
+			res = new Vector2f();
+		res.set(a.x - b.x, a.y - b.y);
+		return res;
+	}
+
+	public static Vector2f scale(Vector2f a, float s) {
+		return new Vector2f(a.x * s, a.y * s);
+	}
+
+    public static Vector2f compMult(Vector2f a, Vector2f b) {
+		return new Vector2f(a.x * b.x, a.y * b.y);
+    }
 }

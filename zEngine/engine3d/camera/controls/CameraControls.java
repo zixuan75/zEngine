@@ -16,9 +16,10 @@ public class CameraControls {
         cam.position = this.camera.position;
         cam.rotation = this.camera.rotation;
     }
-    public void rotate(Vector2f delta) {
+    public void rotate(Vector2f delta, float amount) {
         x = (float) Math.sin(Math.toRadians(camera.rotation.y));
 		z = (float) Math.cos(Math.toRadians(camera.rotation.y));
+        camera.rotation.translate(-delta.y * amount, -delta.x * amount, 0);
     }
     public void moveUp(float amount) {
         camera.position.y += amount;

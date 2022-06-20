@@ -4,6 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 
 import zEngine.input.keys.KeyDevice;
+import zEngine.input.mice.Mouse;
 
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -46,6 +47,8 @@ public class DisplayBuilder {
         };
         display.kDevice = new KeyDevice();
         display.kDevice.bind(display.window);
+        display.mouse = new Mouse();
+        display.mouse.bind(display.window);
         GLFW.glfwSetFramebufferSizeCallback(display.window, display.framebufferSizeCallback);
         if (centered) {
             display.setCenterPosition(0.5f, 0.5f);

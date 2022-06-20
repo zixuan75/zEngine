@@ -72,4 +72,14 @@ public class Vector4f implements Vector {
 	public static Vector4f compMult(Vector4f a, Vector4f b) {
 		return new Vector4f(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
 	}
+    public static float length(Vector4f a) {
+        return (float) Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w);
+    }
+    public static Vector4f normalize(Vector4f a) {
+		float length = length(a);
+		return new Vector4f(a.x / length, a.y / length, a.z / length, a.w / length);
+	}
+	public static float dot(Vector4f a, Vector4f b) {
+		return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+	}
 }

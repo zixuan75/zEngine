@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import zEngine.input.keys.KeyDevice;
+import zEngine.input.mice.Mouse;
 
 /**
  * A class for handling the display. 
@@ -20,6 +21,7 @@ public class Display {
     protected int height;
     protected GLFWFramebufferSizeCallback framebufferSizeCallback;
     public KeyDevice kDevice;
+    public Mouse mouse;
     public static Display current;
 
     protected static void setCurrentDisplay(Display display) {
@@ -51,6 +53,14 @@ public class Display {
     }
 
     /**
+     * 
+     * @return mouse of current display
+     */
+    public static Mouse getMouse() {
+        return current.mouse;
+    }
+
+    /**
      * Sets the current context to the window
      */
     public void setCurrentContext() {
@@ -62,7 +72,7 @@ public class Display {
     }
 
     /**
-     * Update
+     * Updates the window
      */
     public void update() {
         GLFW.glfwSwapBuffers(window);

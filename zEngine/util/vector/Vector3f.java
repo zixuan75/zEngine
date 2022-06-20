@@ -1,7 +1,5 @@
 package zEngine.util.vector;
 
-import zEngine.util.math.zLinear;
-
 public class Vector3f implements Vector {
 	public float x, y, z;
 	
@@ -70,7 +68,7 @@ public class Vector3f implements Vector {
 	}
 
 	public Vector3f project(Vector3f onto) {
-		return zLinear.scale(zLinear.normalize(onto), zLinear.dot(this, onto));
+		return Vector3f.scale(Vector3f.normalize(onto), Vector3f.dot(this, onto));
 	}
 
 	@Override
@@ -125,5 +123,41 @@ public class Vector3f implements Vector {
 		this.y *= f;
 		this.z *= f;
 		return this;
+	}
+
+	public static Vector3f translate(Vector3f a, Vector3f b) {
+		return new Vector3f(a.x + b.x, a.y + b.y, a.z + b.z);
+	}
+	
+	public static Vector3f diff(Vector3f a, Vector3f b) {
+		return new Vector3f(a.x - b.x, a.y - b.y, a.z - b.z);
+	}
+
+	public static Vector3f scale(Vector3f a, float s) {
+		return new Vector3f(a.x * s, a.y * s, a.z * s);
+	}
+
+	public static float dot(Vector3f a, Vector3f b) {
+		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
+	public static Vector3f normalize(Vector3f a) {
+		float length = length(a);
+		return new Vector3f(a.x / length, a.y / length, a.z / length);
+	}
+	public static float length(Vector3f a) {
+		return (float) Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+	}
+
+	public static Vector3f compMult(Vector3f a, Vector3f b) {
+		return new Vector3f(a.x * b.x, a.y * b.y, a.z * b.z);
+	}
+
+	public static Vector3f cross(Vector3f a, Vector3f b) {
+		Vector3f res = new Vector3f();
+		res.x = a.y * b.z - a.z * b.y;
+		res.y = a.z * b.x - a.x * b.z;
+		res.z = a.x * b.y - a.y * b.x;
+		return res;
 	}
 }

@@ -49,7 +49,7 @@ class TriangleApp extends Application {
     }
 
     @Override
-    public void update() {
+    public void paint() {
         /*
          * The order of clearing, rendering and swapping is 
          * very important.
@@ -62,9 +62,8 @@ class TriangleApp extends Application {
          * before we can swap the buffer.
          */
 
-        /* The following two lines clear the screen */
-        glClearColor(0, 0, 0, 0);
-        glClear();
+        /* The following line clears the screen */
+        glClear(0, 0, 0);
         /* This line resizes the viewport to fit */
         glDimensions(Display.getWidth(), Display.getHeight());
         /* The following three lines render the triangle */
@@ -110,4 +109,7 @@ class TriangleApp extends Application {
         Mesh mesh = builder.createMesh();
         return mesh;
     }
+
+    @Override
+    public void update() {}
 }

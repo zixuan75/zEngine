@@ -21,8 +21,9 @@ public abstract class Application {
     }
 
     public abstract void start();
-    public abstract void update();
+    public abstract void paint();
     public abstract void end();
+    public abstract void update();
 
     protected void close() {
         this.closed = true;

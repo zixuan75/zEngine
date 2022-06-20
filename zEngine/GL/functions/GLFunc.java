@@ -2,6 +2,8 @@ package zEngine.GL.functions;
 
 import org.lwjgl.opengl.GL11;
 
+import zEngine.glfw.Display;
+
 /**
  * A wrapper around common OpenGL functions
  * 
@@ -9,7 +11,8 @@ import org.lwjgl.opengl.GL11;
  */
 public class GLFunc {
 
-
+    private static boolean cullFaces = false;
+    private static boolean enableDepth = false;
 
     /*
      * Window-related functions
@@ -29,7 +32,7 @@ public class GLFunc {
     /**
      * Clears the COLOR, DEPTH and STENCIL buffer bits
      */
-    public static void glClear() {
+    public static void glClearBufferBits() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
     }
 
@@ -38,6 +41,7 @@ public class GLFunc {
      */
     public static void glEnableDepth() {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+        enableDepth = true;
     }
 
     /**
@@ -45,6 +49,7 @@ public class GLFunc {
      */
     public static void glDisableDepth() {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
+        enableDepth = false;
     }
 
     /**
@@ -62,6 +67,7 @@ public class GLFunc {
     public static void glCull() {
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glCullFace(GL11.GL_BACK);
+        cullFaces = true;
     }
 
     /**
@@ -69,5 +75,48 @@ public class GLFunc {
      */
     public static void glStopCull() {
         GL11.glDisable(GL11.GL_CULL_FACE);
+        cullFaces = false;
+    }
+
+
+    /** Helper functions */
+
+    /**
+     * Sets up OpenGL
+     * @param cull
+     * @param depth
+     */
+    public static void glSetup(boolean cull, boolean depth) {
+        cullFaces = cull;
+        enableDepth = depth;
+        if (cullFaces) {
+            glCull();
+        } else {
+            glStopCull();
+        }
+        if (enableDepth) {
+            glEnableDepth();
+        } else {
+            glDisableDepth();
+        }
+        glDimensions(Display.getWidth(), Display.getHeight());
+    }
+
+    public static void glFinish() {
+        if (cullFaces) {
+            glStopCull();
+        } else {
+            glCull();
+        }
+        if (enableDepth) {
+            glDisableDepth();
+        } else {
+            glEnableDepth();
+        }
+    }
+
+    public static void glClear(float r, float g, float b) {
+        glClearColor(r, g, b, 1);
+        glClearBufferBits();
     }
 }

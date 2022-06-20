@@ -1,6 +1,5 @@
 package zEngine.util.collision;
 
-import zEngine.util.math.zLinear;
 import zEngine.util.vector.Vector2f;
 
 public class Line {
@@ -13,8 +12,8 @@ public class Line {
     }
 
     public boolean inLine(Vector2f point) {
-        Vector2f delta = zLinear.diff(point, center);
-        float dotProduct = zLinear.dot(delta, normal);
+        Vector2f delta = Vector2f.diff(point, center);
+        float dotProduct = Vector2f.dot(delta, normal);
         return (dotProduct < 0);
     }
 }
